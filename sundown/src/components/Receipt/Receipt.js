@@ -1,8 +1,19 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
 
-function Receipt({email}) {
-    const receiptEmail = email;
+function Receipt({saveDish, saveDrinks, saveDate, saveAmount, saveEmail}) {
+    const [order, setOrder] = useState([{
+            dish: saveDish,
+            drinks: saveDrinks,
+            date: saveDate,
+            amount: saveAmount
+    }])
+    console.log(order);
+
+    useEffect(() => {
+        localStorage.setItem(saveEmail, JSON.stringify(order))
+    }, [saveDish, saveDrinks, saveDate, saveAmount, saveEmail])
+
     return (
         <div id="receiptContainer">
             <Link to="/">
@@ -14,7 +25,11 @@ function Receipt({email}) {
                     
                 </div>
                 <div className="info">
-                    <p>{receiptEmail}</p>
+                    <p>Dish: {JSON.stringify(saveDish)}</p>
+                    <p>Drinks: {JSON.stringify(saveDrinks)}</p>
+                    <p>Amount of people: {saveAmount}</p>
+                    <p>Date: {JSON.stringify(saveDate)}</p>
+                    <p>Email: {saveEmail}</p>
                 </div>
             </div>
         </div>

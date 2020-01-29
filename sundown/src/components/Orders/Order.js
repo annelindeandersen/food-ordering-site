@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import {setHours, setMinutes, getDay} from "date-fns";
 import {Link} from "react-router-dom";
 
-function Order() {
+function Order({saveAmount, setSaveAmount, saveEmail, setSaveEmail, saveDate, setSaveDate}) {
     let [amount, setAmount] = useState(1);
     const [email, setEmail] = useState('');
     const [startDate, setStartDate] = useState(setHours(setMinutes(new Date(), 0), 16));
@@ -35,6 +35,18 @@ function Order() {
             setAmount(amount);
             console.log(amount);
         }
+    }
+
+    // useEffect(() => {
+    //     localStorage.setItem('date', startDate);
+    //     localStorage.setItem('amount', amount);
+    //     localStorage.setItem('email', email);
+    // }, [startDate, amount, email])
+
+    const saveOrder = () => {
+        setSaveAmount(amount);
+        setSaveDate(startDate);
+        setSaveEmail(email);
     }
 
     return (
@@ -69,8 +81,8 @@ function Order() {
                     <input name="email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
                 </div>
             </div>
-            <Link to="/receipt" email={email} amount={amount} date={startDate}>
-                <button className="button">Order</button>
+            <Link to="/receipt">
+                <button onClick={saveOrder} className="button">Order</button>
             </Link>
         </div>
     )

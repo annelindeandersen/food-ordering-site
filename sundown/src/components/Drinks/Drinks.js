@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import {Link} from 'react-router-dom';
 
-function Drinks() {
+const Drinks = ({saveDrinks, setSaveDrinks}) => {
+// function Drinks(dish) {
+    // const [savedDish, setSavedDish] = useState({dish});
+    // console.log(savedDish);
     let [selectedDrinkIds, setSelectedDrinkIds] = useState([]);
     const [drinks, setDrinks] = useState([
             {
@@ -22,11 +25,25 @@ function Drinks() {
     }, [])
 
     const selectDrink = ({key}) => {
-        if (key.id) {
-            setSelectedDrinkIds(key.id)
-            console.log(selectedDrinkIds);
+        const drinksArr = [...selectedDrinkIds];
+
+        if (key.name) {
+            const drink = drinksArr.indexOf(key.name);
+            console.log(drink);
+            if (drink >= 0) {
+                drinksArr.splice(drink, 1);
+            } else {
+                drinksArr.push(key.name)
+            }
+            setSelectedDrinkIds(drinksArr);
         }
     }
+
+    // useEffect(() => {
+    //     // localStorage.getItem('drinks', JSON.parse(selectedDrinkIds));
+        
+    //     localStorage.setItem('drinks', JSON.stringify(selectedDrinkIds));
+    // }, [selectedDrinkIds])
 
     return(
         <div id="drinksContainer">
@@ -40,8 +57,13 @@ function Drinks() {
             </div>
             <div id="nextBox">
                 <h3>Pick date and amount next</h3>
+                <hr/><br/>
+                <i>Your current drinks choice:</i>
+                <p>{JSON.stringify(selectedDrinkIds).join(',')}</p>
+                {/* <p>{JSON.stringify(selectedDrinkIds).replace(/[\[\]"']+/g, ' ')}</p> */}
+                <br/>
                 <Link to="/order">
-                    <button className="button">Next</button>
+                    <button onClick={() => setSaveDrinks(selectedDrinkIds)} className="button">Next</button>
                 </Link>
             </div>
         </div>

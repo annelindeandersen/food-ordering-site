@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {Link} from 'react-router-dom';
 
-function Dishes() {
-
+function Dishes({saveDish, setSaveDish, saveEmail}) {
     const [dish, setDish] = useState({
         meals: [
             {
@@ -12,7 +11,11 @@ function Dishes() {
     });
 
     useEffect(() => {
+        const savedDish = localStorage.getItem(saveEmail);
+        console.log(savedDish);
+    }, [saveEmail])
 
+    useEffect(() => {
         const getApi = async () => {
             const result = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
             const body = await result.json();
@@ -22,8 +25,11 @@ function Dishes() {
         getApi();
     }, [])
 
-    const reloadPage = () => {
-        window.location = "/dishes";
+    const newDish = async () => {
+        const result = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
+        const body = await result.json();
+        console.log(body);
+        setDish(body);
     }
 
     return(
@@ -36,12 +42,14 @@ function Dishes() {
                         <p className="dishDesc" key={key.strInstructions}>{key.strInstructions}</p>
                     </div>
                 ))}
-                <button onClick={reloadPage} className="button">Generate new</button>
+                <button onClick={newDish} className="button">Generate new</button>
             </div>
             <div id="nextBox">
                 <h3>Pick drinks next</h3>
+                <hr/><br/>
+                <i>Your current dish choice:</i><p>{dish.meals[0].strMeal}</p><br/>
                 <Link to="/drinks">
-                    <button className="button">Next</button>
+                    <button onClick={() => setSaveDish(dish.meals[0])} className="button">Next</button>
                 </Link>
             </div>
         </div>
