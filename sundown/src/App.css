@@ -4,11 +4,247 @@ Secondary color: #007DDB
 */
 
 body {
-  margin: 0;
-  padding: 0;
+  width: 80vw;
+  margin: 0 10vw;
 }
 
 * {
   box-sizing: border-box;
   font-family: 'Helvetica Neue';
+  margin: 0;
+  padding: 0;
+}
+
+.button {
+  background: #BA2329;
+  border-radius: 20px;
+  border: none;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bolder;
+  padding: 13px;
+  width: 25vw;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+h1, h2, h3, h4 {
+  color: #BA2329;
+  text-transform: uppercase;
+}
+
+label {
+  color: #BA2329;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+}
+
+input {
+  padding: 10px;
+  border: 1px solid black;
+  margin-bottom: 10px;
+}
+
+/*********  HOME  **********/
+
+#menuContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+  height: 70px;
+  text-transform: uppercase;
+  /* font-weight: bolder; */
+  cursor: pointer;
+  color: #BA2329;
+}
+
+#logo {
+  height: 60px;
+}
+
+#sliderContainer {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 15px;
+  justify-items: center;
+  height: 35vh;
+  margin: 15px;
+}
+
+#slider {
+  border: 1px solid black;
+  width: 100%;
+  min-height: 35vh;
+  overflow: hidden;
+}
+
+#orderflow {
+  border: 1px solid black;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
+  text-transform: uppercase;
+}
+
+#findOrderContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 15px;
+  justify-items: center;
+  height: 35vh;
+  margin: 15px;
+  text-transform: uppercase;
+}
+
+#findOrder {
+  border: 1px solid black;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-evenly; */
+  padding: 15px;
+}
+
+#emailContainer {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  margin-top: 10vh;
+}
+
+#emailContainer button {
+  float: right;
+}
+
+#contentBox {
+  border: 1px solid black;
+  width: 100%;
+  padding: 15px;
+  text-transform: uppercase;
+}
+
+/*********  DRINKS  **********/
+
+#drinksContainer {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 15px;
+  padding: 15px;
+}
+
+.drinks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 10vh;
+  width: auto;
+  border: 1px solid black;
+  padding: 5px 0 0 5px;
+  height: 80vh;
+  overflow: scroll;
+}
+
+.drink {
+  border: 1px solid black;
+  margin: 0 5px 5px 0;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  height: 20vh;
+}
+
+.drink:first-child {
+  display: none;
+}
+
+.drinkImg {
+  height: 10vh;
+}
+
+#nextBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+/*********  DISHES  **********/
+
+#dishesContainer {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 15px;
+  padding: 15px;
+}
+
+.dish {
+  border: solid 1px black;
+  padding: 15px;
+}
+
+#nextBox {
+  border: solid 1px black;
+  padding: 15px;
+  height: 22vh;
+}
+
+.dishImg {
+  height: 40vh;
+}
+
+.dishTitle {
+  padding: 15px 0;
+}
+
+.dishDesc {
+  padding: 0 0 15px 0;
+}
+
+
+/*********  ORDER  **********/
+
+#orderContainer {
+  border: 1px solid black;
+  padding: 15px;
+  position: relative;
+  margin-top: 15px;
+}
+
+#orderContainer button {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+}
+
+#orderWrapper {
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  grid-gap: 15px;
+}
+
+#emailWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+#amount {
+  display: flex;
+  margin: 15px 0 35px 0;
+  width: 10vw;
+  justify-content: space-between;
+}
+
+.amountImg {
+  width: 20px;
+  cursor: pointer;
+}
+
+
+/*********  RECEIPT  **********/
+
+#receiptContainer {
+  padding: 15px;
 }

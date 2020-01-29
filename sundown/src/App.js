@@ -1,23 +1,50 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+
+// ********* Components
+import Menu from './components/Menu/Menu';
+import Slider from './components/Home/Slider';
+import FindOrder from './components/Home/FindOrder';
+import Dishes from './components/Dishes/Dishes';
+import Drinks from './components/Drinks/Drinks';
+import Order from './components/Orders/Order';
+import Receipt from './components/Receipt/Receipt';
 
 function App() {
-  const [name, setName] = useState('');
-
-  useEffect(() => {
-    let getName = localStorage.getItem('name');
-    console.log(getName);
-  }, [name])
-
-  const saveName = () => {
-    alert('Name set');
-    localStorage.setItem('name', name);
-  }
 
   return (
     <div className="App">
-      <input type="text" placeholder="name" value={name} onChange={(event) => setName(event.target.value)}/>
-      <input onClick={saveName} type="submit" value="set name"/>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Menu/>
+            <Slider/>
+            <FindOrder/>
+          </Route>
+          <Route path="/dishes">
+            <Menu/>
+            <Dishes/>
+          </Route>
+          <Route path="/drinks">
+            <Menu/>
+            <Drinks/>
+          </Route>
+          <Route path="/order">
+            <Menu/>
+            <Order/>
+          </Route>
+          <Route path="/receipt">
+            <Menu/>
+            <Receipt/>
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
