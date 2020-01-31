@@ -8,6 +8,7 @@ function Menu() {
             <div>Produkter</div>
             <div>Nyhedsbrev</div>
             <div>Kontakt</div>
+            <h2>MENU</h2>
         </div>
     )
 }

@@ -1,31 +1,64 @@
 import React, { useState, useEffect } from 'react';
 import {Link} from 'react-router-dom';
+import EmailValidator from 'email-validator';
 
 function Dishes({saveDish, setSaveDish, saveEmail}) {
+    const [savedEmail, setSavedEmail] = useState(-1)
     const [dish, setDish] = useState({
         meals: [
             {
-                strMeal: ''
+                strMeal: '',
+                strInstructions: '',
+                strMealThumb: ''
             }
         ]
     });
 
     useEffect(() => {
         const savedDish = localStorage.getItem(saveEmail);
-        console.log(savedDish);
+        console.log(saveEmail)
+        const savedDishArr = JSON.parse(savedDish);
+        // console.log(savedDishArr);
+        // if (savedDish !== null) {
+        //     // console.log(savedDish.indexOf(saveEmail))
+        //     setSavedEmail(true);
+        // }
+
+        // document.querySelector('.errorBox').style.display = 'none'
+
+        if (saveEmail.length !== 0) {
+            if (localStorage.getItem(saveEmail) !== null) {
+                setDish({
+                    meals: [
+                        {
+                            strMeal: savedDishArr[0].dish.strMeal,
+                            strInstructions: savedDishArr[0].dish.strInstructions,
+                            strMealThumb: savedDishArr[0].dish.strMealThumb
+                        }
+                    ]
+                })
+                document.querySelector('.dishImg').style.display = 'none';
+                return console.log(dish, 'new');
+            } else if (EmailValidator.validate(saveEmail) == false) {
+                getApi();
+                // alert('Sorry, no order to be found!');
+                document.querySelector('.errorBox').style.display = 'flex';
+            } else if (savedEmail !== true) {
+                getApi();
+                // alert('Sorry, no order to be found!');
+                document.querySelector('.errorBox').style.display = 'flex';
+            } 
+        } else {
+            // if (saveEmail.length == 0) {
+            //     getApi();
+            //     // alert('Sorry, no order to be found!');
+            //     document.querySelector('.errorBox').style.display = 'grid';
+            // }
+            getApi();
+        }
     }, [saveEmail])
 
-    useEffect(() => {
-        const getApi = async () => {
-            const result = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
-            const body = await result.json();
-            console.log(body);
-            setDish(body);
-        }
-        getApi();
-    }, [])
-
-    const newDish = async () => {
+    const getApi = async () => {
         const result = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
         const body = await result.json();
         console.log(body);
@@ -34,6 +67,13 @@ function Dishes({saveDish, setSaveDish, saveEmail}) {
 
     return(
         <div id="dishesContainer">
+            <div className="errorBox">
+                <h1>Oops!</h1>
+                <p>No order to be found with that email.</p><br/>
+                <Link to='/'>
+                    <button onClick={() => document.querySelector('.errorBox').style.display = 'none'} className="button">Go back</button>
+                </Link>
+            </div>
             <div className="dish">
                 {dish.meals.map((key, index) => (
                     <div key={key.idMeal}>
@@ -42,12 +82,13 @@ function Dishes({saveDish, setSaveDish, saveEmail}) {
                         <p className="dishDesc" key={key.strInstructions}>{key.strInstructions}</p>
                     </div>
                 ))}
-                <button onClick={newDish} className="button">Generate new</button>
+                <button onClick={getApi} className="button">Generate new</button>
             </div>
             <div id="nextBox">
                 <h3>Pick drinks next</h3>
-                <hr/><br/>
-                <i>Your current dish choice:</i><p>{dish.meals[0].strMeal}</p><br/>
+                <div className="line"></div>
+                <br/>
+                <i>Your current dish choice:</i><p><b>{dish.meals[0].strMeal}</b></p><br/>
                 <Link to="/drinks">
                     <button onClick={() => setSaveDish(dish.meals[0])} className="button">Next</button>
                 </Link>

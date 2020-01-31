@@ -24,7 +24,6 @@ function App() {
   const [saveDate, setSaveDate] = useState('');
 
   useEffect(() => {
-    // setSaveDish(saveDish)
     console.log(saveDish);
     console.log(saveDrinks);
     console.log(saveAmount);
@@ -38,7 +37,7 @@ function App() {
         <Switch>
           <Route exact path="/">
             <Menu/>
-            <Slider saveDish={saveDish} saveDrinks={saveDrinks} saveDate={saveDate} saveAmount={saveAmount} saveEmail={saveEmail}/>
+            <Slider saveDish={saveDish} setSaveDish={setSaveDish} saveDrinks={saveDrinks} setSaveDrinks={setSaveDrinks} saveDate={saveDate} setSaveDate={setSaveDate} saveAmount={saveAmount} setSaveAmount={setSaveAmount} saveEmail={saveEmail}/>
             <FindOrder saveEmail={saveEmail} setSaveEmail={setSaveEmail} />
           </Route>
           <Route path="/dishes">
@@ -51,11 +50,11 @@ function App() {
           </Route>
           <Route path="/order">
             <Menu/>
-            <Order saveAmount={saveAmount} setSaveAmount={setSaveAmount} saveEmail={saveEmail} setSaveEmail={setSaveEmail} saveDate={saveDate} setSaveDate={setSaveDate} />
+            <Order saveDish={saveDish} saveDrinks={saveDrinks} saveAmount={saveAmount} setSaveAmount={setSaveAmount} saveEmail={saveEmail} setSaveEmail={setSaveEmail} saveDate={saveDate} setSaveDate={setSaveDate} />
           </Route>
           <Route path="/receipt">
             <Menu/>
-            <Receipt saveDish={saveDish} saveDrinks={saveDrinks} saveDate={saveDate} saveAmount={saveAmount} saveEmail={saveEmail} />
+            <Receipt saveDish={saveDish} setSaveDish={setSaveDish} saveDrinks={saveDrinks} setSaveDrinks={setSaveDrinks} saveDate={saveDate} setSaveDate={setSaveDate} saveAmount={saveAmount} setSaveAmount={setSaveAmount} saveEmail={saveEmail} />
           </Route>
         </Switch>
       </Router>
