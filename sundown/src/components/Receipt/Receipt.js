@@ -18,16 +18,20 @@ function Receipt({saveDish, setSaveDish, saveDrinks, setSaveDrinks, saveDate, se
     return (
         <div id="receiptContainer">
             <div id="receiptBox">
-                <h2>Receipt</h2><br/>
+                <h1>Receipt</h1><br/>
                 <div className="info">
-                    <h3 className="blueFont">{saveDish ? `Your foods & drinks` : 'Nothing added yet'}</h3><br/>
-                    <p>{saveDish ? `Dish: ${(saveDish.strMeal)}` : ''}</p>
-                    <p>{saveDrinks ? `Drinks: ${(saveDrinks).join(', ')}` : ''}</p><br/><br/>
-                    <h3 className="blueFont">{saveDate ? `Your other info` : ''}</h3><br/>
-                    <p>{saveAmount ? `Amount of people: ${saveAmount}` : ''}</p>
-                    <p>{saveDate ? `Date: ${moment(saveDate).format('lll')}` : ''}</p>
-                    {/* <p>{saveDate ? `Date: ${(saveDate).toString()}` : ''}</p> */}
-                    <p>{saveEmail ? `Email: ${saveEmail}` : ''}</p>
+                    <h2 className="blueFont">Your foods & drinks</h2><br/>
+                    <p><b>Dish:</b></p>
+                    <div id="dishWrap">
+                        <img className="smallImg" src={saveDish.strMealThumb}/>
+                        <h4>{(saveDish.strMeal)}</h4>
+                    </div>
+                    <p><b>Drinks:</b></p> 
+                    {saveDrinks.map((drink) => ( <div key={drink} className="receiptDrink"><div className="imgBg"><img className="smallImg" src={drink.image_url}/></div><h4>{drink.name}</h4></div> ))}<br/><br/>
+                    <h2 className="blueFont">Your other info</h2><br/>
+                    <p><b>Amount of people:</b> {saveAmount}</p>
+                    <p><b>Date:</b> {moment(saveDate).format('lll')}</p>
+                    <p><b>Email:</b> {saveEmail}</p>
                 </div>
             </div>
             <Link to="/">

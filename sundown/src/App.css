@@ -62,13 +62,25 @@ label {
   text-transform: uppercase;
 }
 
-input {
+input, select {
   padding: 13px;
   border: none;
   margin-bottom: 10px;
   box-shadow: 0px 0px 5px rgba(0, 124, 219, 0.336);
   border-radius: 20px;
   width: 25vw;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance:textfield;
 }
 
 .input-error {
@@ -83,6 +95,13 @@ input {
     width: 100%;
   }
 }
+
+button:active, input:active, select:active {
+  outline: none;
+  border: none;
+  }
+  
+  button:focus, input:focus, select:focus {outline:0;}
 
 /*********  HOME  **********/
 
@@ -133,15 +152,26 @@ input {
   width: 100%;
   min-height: 35vh;
   overflow: hidden;
-  position: relative;
+  /* position: relative; */
 }
 
-/* .carousel {
-  position: absolute !important;
-  top: 0;
-  left: 0;
+.main-carousel, .carousel-cell {
+  height: 100%;
+  width: 100%;
+
+}
+
+.flickity-viewport {
   height: 100% !important;
-} */
+}
+
+.carousel-cell img {
+  max-width: 100%;
+}
+
+.flickity-page-dots {
+  bottom: 5px !important;
+}
 
 #orderflow {
   /* border: 1px solid black; */
@@ -175,6 +205,12 @@ input {
   /* justify-content: space-evenly; */
   padding: 25px;
   background: white;
+}
+
+#emailError {
+  display: none;
+  color: #BA2329;
+  padding-bottom: 10px;
 }
 
 #emailContainer {
@@ -233,8 +269,10 @@ input {
     margin-top: 25px;
     grid-template-columns: 1fr;
   }
-  .carousel img {
-    width: 135% !important;
+  .carousel-cell img {
+    height: 100%;
+    max-width: none !important;
+    width: auto;
   }
   #orderflow h4 {
     display: none;
@@ -253,10 +291,15 @@ input {
 @media screen and (max-width: 767px) {
   #sliderContainer {
     grid-template-columns: 1fr;
-    height: 35vh;
+    height: 75vh;
   }
   #slider {
-    display: none;
+    min-height: 20vh;
+  }
+  .carousel-cell img {
+    height: auto;
+    max-width: none !important;
+    width: 100%;
   }
   #findOrderContainer {
     grid-template-columns: 1fr;
@@ -280,12 +323,27 @@ input {
   }
 }
 
+@media screen and (max-width: 533px) {
+  /* #sliderContainer {
+    grid-template-columns: 1fr;
+    height: 75vh;
+  } */
+  #slider {
+    height: 35vh;
+  }
+  .carousel-cell img {
+    height: 100%;
+    /* max-width: none !important; */
+    width: auto;
+  }
+}
+
 /*********  DRINKS  **********/
 
 #drinksContainer {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  grid-gap: 15px;
+  grid-gap: 65px;
   padding: 15px;
   justify-items: center;
   margin-top: 95px;
@@ -300,10 +358,11 @@ input {
   /* background: rgba(0, 124, 219, 0.13); */
   /* border: 1px solid black; */
   padding: 15px;
-  height: 82vh;
+  height: 100%;
   overflow: scroll;
   border-radius: 20px;
   background: white;
+  margin-bottom: 30px;
 }
 
 .drink {
@@ -311,8 +370,10 @@ input {
   box-shadow: 0px 0px 10px rgba(0, 124, 219, 0.199);
   border-radius: 20px;
   margin: 15px;
-  display: grid;
-  justify-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* justify-items: center; */
   align-items: center;
   height: 18vw;
   width: 18vw;
@@ -321,9 +382,10 @@ input {
 }
 
 .drink h4 {
-  max-width: 10vw;
+  /* max-width: 15vw; */
   text-align: center;
   color: rgb(0, 124, 219);
+  padding: 10px;
 }
 
 .btn-pressed {
@@ -341,30 +403,77 @@ input {
 
 .drinkImg {
   width: 3vw;
+  height: 11.5vw;
+  width: auto;
+  cursor: pointer;
+}
+
+#drinksError {
+  display: none;
+  color: #BA2329;
+  margin-top: 10px;
+}
+
+.smallImg {
+  height: 40px;
+}
+
+.imgBg {
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  border-radius: 100px;
+  margin-right: 10px;
+}
+
+.selectedDrink {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.selectedDrink b {
+  max-width: 80%;
+}
+
+.unSelect {
+  cursor: pointer;
+}
+
+.selectedDrink div {
+  display: flex;
+  align-items: center;
 }
 
 #nextBox {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 30%;
 }
 
-@media screen and (max-width: 767px) {
+#nextBox p {
+  white-space: pre-wrap;
+}
+
+@media screen and (max-width: 768px) {
   #drinksContainer {
     grid-template-columns: 1fr;
-  }
-  .drinks {
-    height: 100%;
+    grid-gap: 30px;
   }
   .drink {
     height: 30vw;
     width: 30vw;
   }
   .drinkImg {
-    width: 5vw;
+    height: 19vw;
   }
   .drink h4 {
-    max-width: 20vw;
+    /* max-width: 20vw; */
     font-size: 12px;
   }
 }
@@ -375,9 +484,10 @@ input {
 #dishesContainer {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  grid-gap: 35px;
+  grid-gap: 105px;
   padding: 15px;
   margin-top: 95px;
+  position: relative;
 }
 
 .errorBox {
@@ -404,9 +514,10 @@ input {
   padding: 25px;
   display: grid;
   justify-items: center;
-  max-height: 82vh;
+  /* max-height: 82vh; */
   overflow: scroll;
   background: white;
+  margin-bottom: 25px;
 }
 
 .dish div {
@@ -428,8 +539,11 @@ input {
   /* border: solid 1px black; */
   background: rgba(0, 124, 219, 0.13);
   padding: 25px;
-  height: 30vh;
+  /* height: 30vh; */
   border-radius: 20px;
+  position: fixed;
+  top: 109px;
+  right: 10vw;
 }
 
 .dishImg {
@@ -450,11 +564,18 @@ input {
   .errorBox a {
     width: 30%;
   }
+  #dishesContainer {
+  /* grid-gap: 60px; */
+  }
+  #nextBox .button {
+    width: 25vw !important;
+  }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 768px) {
   #dishesContainer {
     grid-template-columns: 1fr;
+    grid-gap: 15px;
   }
   .dishImg {
     height: 30vh;
@@ -464,6 +585,12 @@ input {
   }
   .errorBox a {
     width: 40%;
+  }
+  #nextBox {
+    position: static;
+    height: 100%;
+    margin-bottom: 35px;
+    width: 100%;
   }
 }
 
@@ -482,9 +609,15 @@ input {
   margin-bottom: 30px;
 }
 
-#error {
+#error, #errorAmount {
   color: #BA2329;
   margin-bottom: 5px;
+  position: absolute;
+}
+
+.errorBoxMargin {
+  position: relative;
+  padding: 5px 0 25px 5px;
 }
 
 #orderWrapper {
@@ -503,9 +636,17 @@ input {
 
 #amount {
   display: flex;
-  margin: 15px 0 35px 0;
+  margin: 15px 0 10px 0;
   width: 130px;
   justify-content: space-between;
+}
+
+#amount input {
+  margin: 0 10px;
+  text-align: center;
+  padding: 18px;
+  font-size: 20px;
+  font-weight: bolder;
 }
 
 .amountImg {
@@ -548,6 +689,27 @@ input {
   width: 50vw;
   min-height: 40vh;
   margin-top: 20px;
+}
+
+.receiptDrink, #dishWrap {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+#dishWrap {
+  margin-bottom: 20px;
+}
+
+#dishWrap img {
+  border-radius: 100px; margin-right: 10px;
+  width: 50px;
+  height: 50px;
+}
+
+.receiptDrink div {
+  background: rgba(0, 124, 219, 0.096);
+  margin-right: 10px;
 }
 
 #receiptContainer button {

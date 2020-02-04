@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 
@@ -17,11 +17,11 @@ function FindOrder({saveEmail, setSaveEmail}) {
                 <h3>Find your order</h3>
                 <div id="emailContainer">
                     <label>Enter email</label>
+                    <b id="emailError">Email field cannot be empty</b>
                     <input placeholder="Enter email" name="email" id="email" type="email" value={saveEmail} onChange={(event) => setSaveEmail(event.target.value)} className={classNames({'input-error': saveEmail.length == 0})} />
                 </div>
                 <Link to={ saveEmail.length !== 0 ? '/dishes' : '/'}>
-                {/* <Link to='/dishes'> */}
-                    <button onClick={() => console.log(saveEmail)} className="button">Find</button>
+                    <button onClick={() => saveEmail.length !== 0 ? console.log(saveEmail) : document.getElementById('emailError').style.display = 'block'} className="button">Find</button>
                 </Link>
             </div>
             <div id="contentBox">

@@ -18,13 +18,6 @@ function Dishes({saveDish, setSaveDish, saveEmail}) {
         const savedDish = localStorage.getItem(saveEmail);
         console.log(saveEmail)
         const savedDishArr = JSON.parse(savedDish);
-        // console.log(savedDishArr);
-        // if (savedDish !== null) {
-        //     // console.log(savedDish.indexOf(saveEmail))
-        //     setSavedEmail(true);
-        // }
-
-        // document.querySelector('.errorBox').style.display = 'none'
 
         if (saveEmail.length !== 0) {
             if (localStorage.getItem(saveEmail) !== null) {
@@ -41,19 +34,12 @@ function Dishes({saveDish, setSaveDish, saveEmail}) {
                 return console.log(dish, 'new');
             } else if (EmailValidator.validate(saveEmail) == false) {
                 getApi();
-                // alert('Sorry, no order to be found!');
                 document.querySelector('.errorBox').style.display = 'flex';
             } else if (savedEmail !== true) {
                 getApi();
-                // alert('Sorry, no order to be found!');
                 document.querySelector('.errorBox').style.display = 'flex';
             } 
         } else {
-            // if (saveEmail.length == 0) {
-            //     getApi();
-            //     // alert('Sorry, no order to be found!');
-            //     document.querySelector('.errorBox').style.display = 'grid';
-            // }
             getApi();
         }
     }, [saveEmail])

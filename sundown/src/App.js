@@ -3,6 +3,7 @@ import './App.css';
 import {
   BrowserRouter as Router,
   Switch,
+  Redirect,
   Route,
   Link
 } from "react-router-dom";
@@ -46,15 +47,28 @@ function App() {
           </Route>
           <Route path="/drinks">
             <Menu/>
-            <Drinks saveDrinks={saveDrinks} setSaveDrinks={setSaveDrinks} saveEmail={saveEmail} />
+            { saveDish.length === 0 
+            ? 
+            <Redirect to="/dishes"/> 
+            : 
+            <Drinks saveDrinks={saveDrinks} setSaveDrinks={setSaveDrinks} saveEmail={saveEmail} />}
           </Route>
           <Route path="/order">
             <Menu/>
+            { saveDish.length === 0 && saveDrinks.length === 0 
+            ? 
+            // <Redirect to="/dishes"/>  
             <Order saveDish={saveDish} saveDrinks={saveDrinks} saveAmount={saveAmount} setSaveAmount={setSaveAmount} saveEmail={saveEmail} setSaveEmail={setSaveEmail} saveDate={saveDate} setSaveDate={setSaveDate} />
+            : 
+            <Order saveDish={saveDish} saveDrinks={saveDrinks} saveAmount={saveAmount} setSaveAmount={setSaveAmount} saveEmail={saveEmail} setSaveEmail={setSaveEmail} saveDate={saveDate} setSaveDate={setSaveDate} />}
           </Route>
           <Route path="/receipt">
             <Menu/>
-            <Receipt saveDish={saveDish} setSaveDish={setSaveDish} saveDrinks={saveDrinks} setSaveDrinks={setSaveDrinks} saveDate={saveDate} setSaveDate={setSaveDate} saveAmount={saveAmount} setSaveAmount={setSaveAmount} saveEmail={saveEmail} />
+            { saveDish.length === 0 && saveDrinks.length === 0 && saveAmount.length === 0 
+            ? 
+            <Redirect to="/dishes"/> 
+            : 
+            <Receipt saveDish={saveDish} setSaveDish={setSaveDish} saveDrinks={saveDrinks} setSaveDrinks={setSaveDrinks} saveDate={saveDate} setSaveDate={setSaveDate} saveAmount={saveAmount} setSaveAmount={setSaveAmount} saveEmail={saveEmail} />}
           </Route>
         </Switch>
       </Router>

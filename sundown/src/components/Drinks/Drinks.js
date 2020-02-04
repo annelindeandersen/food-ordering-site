@@ -3,8 +3,6 @@ import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 
 const Drinks = ({saveDrinks, setSaveDrinks, saveEmail}) => {
-    // const [storedDrinks, setStoredDrinks] = useState('')
-    // const [isPressed, setIsPressed] = useState(false)
     let [selectedDrinkIds, setSelectedDrinkIds] = useState([]);
     const [drinks, setDrinks] = useState([
             {
@@ -15,14 +13,14 @@ const Drinks = ({saveDrinks, setSaveDrinks, saveEmail}) => {
 
     useEffect(() => {
         const savedDrinks = localStorage.getItem(saveEmail, saveDrinks);
-        // setStoredDrinks(savedDrinks);
         const savedDrinksArr = JSON.parse(savedDrinks);
         console.log(savedDrinksArr);
         console.log(saveEmail);
-        console.log(selectedDrinkIds)
 
         if (saveEmail) {
-            setSelectedDrinkIds(savedDrinksArr[0].drinks);
+            const mapDrinks = savedDrinksArr[0].drinks.map((drink) => (drink.name));
+            console.log(mapDrinks);
+            setSelectedDrinkIds(mapDrinks);
         }
 
         const getApi = async () => {
@@ -34,9 +32,9 @@ const Drinks = ({saveDrinks, setSaveDrinks, saveEmail}) => {
         getApi();
     }, [])
 
-    const selectDrink = ({key}) => {
+    const toggleDrink = ({key}) => {
         const drinksArr = [...selectedDrinkIds];
-
+        document.getElementById('drinksError').style.display = 'none';
         if (key.name) {
             const drink = drinksArr.indexOf(key.name);
             console.log(drink);
@@ -44,17 +42,29 @@ const Drinks = ({saveDrinks, setSaveDrinks, saveEmail}) => {
                 drinksArr.splice(drink, 1);
             } else {
                 drinksArr.push(key.name);
-                // document.getElementsByClassName('selected').style.display = 'grid';
             }
             setSelectedDrinkIds(drinksArr);
+            console.log(selectedDrinkIds)
         }
     }
+
+    const selectedDrinks = drinks.filter(drink => selectedDrinkIds.indexOf(drink.name) !== -1);
+
+    const setDrinkOrError = () => {
+        setSaveDrinks(selectedDrinks);
+        console.log(saveDrinks);
+        if(saveDrinks.length == 0) {
+            console.log('no saved drinks')
+            document.getElementById('drinksError').style.display = 'block';
+        }
+    }
+
 
     return(
         <div id="drinksContainer">
             <div className="drinks">
                 {drinks.map((key, index) => (
-                    <div onClick={() => selectDrink({key})} className='drink'  key={key.id}>
+                    <div onClick={() => toggleDrink({key})} className='drink'  key={key.id}>
                         <div className={classNames({'btn-pressed': selectedDrinkIds.indexOf(key.name) >= 0})}></div>
                         <img className="drinkImg" src={key.image_url} key={key.image_url} alt="img"/>
                         <h4 className="drinkTitle" key={key.name}>{key.name}</h4>
@@ -65,11 +75,22 @@ const Drinks = ({saveDrinks, setSaveDrinks, saveEmail}) => {
                 <h3>Pick date and amount next</h3>
                 <div className="line"></div><br/>
                 <i>Your current drinks choice:</i>
-                <p><b>{(selectedDrinkIds).join(', ')}</b></p>
+                {selectedDrinks.map((key) => (
+                    <div className="selectedDrink" key={key.name}>
+                        <div>
+                            <div className="imgBg"><img className='smallImg' src={key.image_url} alt='img' /></div>
+                            <b>{key.name}</b>
+                        </div>
+                        <div className="unSelect" onClick={() => toggleDrink({key})}>X</div>
+                    </div>
+                ))}
+                {/* <p><b>{(selectedDrinkIds).join("\n")}</b></p> */}
                 <br/>
                 <Link to={selectedDrinkIds.length > 0 ? '/order' : '/drinks'}>
-                    <button onClick={() => setSaveDrinks(selectedDrinkIds)} className="button">Next</button>
+                    <button onClick={setDrinkOrError} className="button">Next</button>
+                    {/* <button onClick={() => setSaveDrinks(selectedDrinkIds)} className="button">Next</button> */}
                 </Link>
+                <b id="drinksError">Please select your drink!</b>
             </div>
         </div>
     )
