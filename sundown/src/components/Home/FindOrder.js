@@ -6,7 +6,7 @@ function FindOrder({saveEmail, setSaveEmail}) {
 
     useEffect(() => {
         const getData = localStorage.getItem(saveEmail);
-        if (getData == null) {
+        if (getData === null) {
             console.log(getData)
         }
     }, [saveEmail])
@@ -18,7 +18,7 @@ function FindOrder({saveEmail, setSaveEmail}) {
                 <div id="emailContainer">
                     <label>Enter email</label>
                     <b id="emailError">Email field cannot be empty</b>
-                    <input placeholder="Enter email" name="email" id="email" type="email" value={saveEmail} onChange={(event) => setSaveEmail(event.target.value)} className={classNames({'input-error': saveEmail.length == 0})} />
+                    <input placeholder="Enter email" name="email" id="email" type="email" value={saveEmail} onChange={(event) => setSaveEmail(event.target.value)} className={classNames({'input-error': saveEmail.length === 0})} />
                 </div>
                 <Link to={ saveEmail.length !== 0 ? '/dishes' : '/'}>
                     <button onClick={() => saveEmail.length !== 0 ? console.log(saveEmail) : document.getElementById('emailError').style.display = 'block'} className="button">Find</button>

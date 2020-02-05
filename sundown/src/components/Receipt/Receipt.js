@@ -13,7 +13,7 @@ function Receipt({saveDish, setSaveDish, saveDrinks, setSaveDrinks, saveDate, se
 
     useEffect(() => {        
         localStorage.setItem(saveEmail, JSON.stringify(order))
-    }, [saveEmail])
+    }, [saveEmail, order])
 
     return (
         <div id="receiptContainer">
@@ -23,14 +23,15 @@ function Receipt({saveDish, setSaveDish, saveDrinks, setSaveDrinks, saveDate, se
                     <h2 className="blueFont">Your foods & drinks</h2><br/>
                     <p><b>Dish:</b></p>
                     <div id="dishWrap">
-                        <img className="smallImg" src={saveDish.strMealThumb}/>
+                        <img className="smallImg" src={saveDish.strMealThumb} alt='img'/>
                         <h4>{(saveDish.strMeal)}</h4>
                     </div>
                     <p><b>Drinks:</b></p> 
-                    {saveDrinks.map((drink) => ( <div key={drink} className="receiptDrink"><div className="imgBg"><img className="smallImg" src={drink.image_url}/></div><h4>{drink.name}</h4></div> ))}<br/><br/>
+                    {saveDrinks.map((drink) => ( <div key={drink} className="receiptDrink"><div className="imgBg"><img className="smallImg" alt='img' src={drink.image_url}/></div><h4>{drink.name}</h4></div> ))}<br/><br/>
                     <h2 className="blueFont">Your other info</h2><br/>
                     <p><b>Amount of people:</b> {saveAmount}</p>
-                    <p><b>Date:</b> {moment(saveDate).format('lll')}</p>
+                    <p><b>Date:</b> {saveDate}</p>
+                    {/* <p><b>Date:</b> {moment(saveDate).format('lll')}</p> */}
                     <p><b>Email:</b> {saveEmail}</p>
                 </div>
             </div>

@@ -8,7 +8,7 @@ import EmailValidator from 'email-validator';
 import moment from 'moment';
  
 function Slider({saveDish, setSaveDish, saveDrinks, setSaveDrinks, saveDate, setSaveDate, saveAmount, setSaveAmount, saveEmail}) {
-    console.log(localStorage.getItem(saveEmail))
+    // console.log(localStorage.getItem(saveEmail))
     useEffect(() => {
         const getData = localStorage.getItem(saveEmail);
         // setSavedEmail(getData);
@@ -16,7 +16,7 @@ function Slider({saveDish, setSaveDish, saveDrinks, setSaveDrinks, saveDate, set
         console.log(dataParse);
 
         if(localStorage.getItem(saveEmail) !== null) {
-            if (EmailValidator.validate(saveEmail) == true) {
+            if (EmailValidator.validate(saveEmail) === true) {
                 setSaveAmount(dataParse[0].amount);
                 setSaveDrinks(dataParse[0].drinks);
                 setSaveDate(dataParse[0].date);
@@ -54,12 +54,12 @@ console.log(saveDrinks);
                     <p>{saveDish && localStorage.getItem(saveEmail) !== null ? `Dish: ${saveDish}` : ''}</p>
                     <p>{saveDrinks && saveDrinks.length > 0 ? <p>Drinks: {saveDrinks.map((drink) => (<span key={drink}>{drink.name}, </span>))}</p> : ''}</p><br/>
                     <h4 className="blueFont">{saveDate && localStorage.getItem(saveEmail) !== null ? `Your other info` : ''}</h4>
-                    <p>{saveDate && localStorage.getItem(saveEmail) !== null ? `Date: ${moment(saveDate).format('lll')}` : ''}</p>
+                    <p>{saveDate && localStorage.getItem(saveEmail) !== null ? `Date: ${saveDate}` : ''}</p>
                     <p>{saveAmount && localStorage.getItem(saveEmail) !== null ? `Amount: ${saveAmount}` : ''}</p>
-                    <p>{EmailValidator.validate(saveEmail) == true && localStorage.getItem(saveEmail) !== null ? `Email: ${saveEmail}` : ''}</p>
+                    <p>{EmailValidator.validate(saveEmail) === true && localStorage.getItem(saveEmail) !== null ? `Email: ${saveEmail}` : ''}</p>
                 </div>
                 <Link to="/dishes">
-                    <button className="button">{EmailValidator.validate(saveEmail) == true && localStorage.getItem(saveEmail) !== null ? 'Update order' : 'Order'}</button>
+                    <button className="button">{EmailValidator.validate(saveEmail) === true && localStorage.getItem(saveEmail) !== null ? 'Update order' : 'Order'}</button>
                 </Link>
             </div>
         </div>

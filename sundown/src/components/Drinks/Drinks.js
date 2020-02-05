@@ -30,7 +30,7 @@ const Drinks = ({saveDrinks, setSaveDrinks, saveEmail}) => {
             setDrinks(body);
         }
         getApi();
-    }, [])
+    }, [saveEmail, saveDrinks])
 
     const toggleDrink = ({key}) => {
         const drinksArr = [...selectedDrinkIds];
@@ -53,7 +53,7 @@ const Drinks = ({saveDrinks, setSaveDrinks, saveEmail}) => {
     const setDrinkOrError = () => {
         setSaveDrinks(selectedDrinks);
         console.log(saveDrinks);
-        if(saveDrinks.length == 0) {
+        if(saveDrinks.length === 0) {
             console.log('no saved drinks')
             document.getElementById('drinksError').style.display = 'block';
         }
