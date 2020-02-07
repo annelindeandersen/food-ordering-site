@@ -7,70 +7,112 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
 // ********* Components
-import Menu from './components/Menu/Menu';
+// import Menu from './components/Menu/Menu';
 import Slider from './components/Home/Slider';
 import FindOrder from './components/Home/FindOrder';
 import Dishes from './components/Dishes/Dishes';
 import Drinks from './components/Drinks/Drinks';
 import Order from './components/Orders/Order';
 import Receipt from './components/Receipt/Receipt';
+import Breadcrumbs from './components/Menu/Breadcrumbs';
+
 
 function App() {
   const [saveDish, setSaveDish] = useState('');
   const [saveDrinks, setSaveDrinks] = useState('');
+  const [selectedDrinkIds, setSelectedDrinkIds] = useState([]);
   const [saveAmount, setSaveAmount] = useState('');
   const [saveEmail, setSaveEmail] = useState('');
   const [saveDate, setSaveDate] = useState('');
+  const [month, setMonth] = useState({
+    name: '',
+    value: ''
+  });
+  const [amount, setAmount] = useState('');
+  const [day, setDay] = useState('');
+  const [year, setYear] = useState('');
+  const [time, setTime] = useState('');
+  const [email, setEmail] = useState('');
+  const [newOrder, setNewOrder] = useState(false);
 
   useEffect(() => {
-    console.log(saveDish);
-    console.log(saveDrinks);
-    console.log(saveAmount);
-    console.log(saveDate);
-    console.log(saveEmail);
-  },[saveDish, saveDrinks, saveAmount, saveDate, saveEmail])
+    console.log({ 'dish': saveDish});
+    console.log({ 'drinks': saveDrinks});
+    console.log({ 'selected-drink-ids': selectedDrinkIds});
+    console.log({ 'amount': saveAmount});
+    console.log({ 'date': saveDate});
+    console.log({ 'email': saveEmail});
+    console.log({ 'order': newOrder, month, day, year, time, email, amount});
+  },[saveDish, saveDrinks, saveAmount, saveDate, saveEmail, selectedDrinkIds, month, day, time, year, email, amount, newOrder])
 
   return (
     <div className="App">
       <Router>
-        <Switch>
-          <Route exact path="/">
-            <Menu/>
-            <Slider saveDish={saveDish} setSaveDish={setSaveDish} saveDrinks={saveDrinks} setSaveDrinks={setSaveDrinks} saveDate={saveDate} setSaveDate={setSaveDate} saveAmount={saveAmount} setSaveAmount={setSaveAmount} saveEmail={saveEmail}/>
-            <FindOrder saveEmail={saveEmail} setSaveEmail={setSaveEmail} />
-          </Route>
-          <Route path="/dishes">
-            <Menu/>
-            <Dishes saveDish={saveDish} setSaveDish={setSaveDish} saveEmail={saveEmail} />
-          </Route>
-          <Route path="/drinks">
-            <Menu/>
-            { saveDish.length === 0 
-            ? 
-            <Redirect to="/dishes"/> 
-            : 
-            <Drinks saveDrinks={saveDrinks} setSaveDrinks={setSaveDrinks} saveEmail={saveEmail} />}
-          </Route>
-          <Route path="/order">
-            <Menu/>
-            { saveDish.length === 0 && saveDrinks.length === 0 
-            ? 
-            // <Redirect to="/dishes"/>  
-            <Order saveDish={saveDish} saveDrinks={saveDrinks} saveAmount={saveAmount} setSaveAmount={setSaveAmount} saveEmail={saveEmail} setSaveEmail={setSaveEmail} saveDate={saveDate} setSaveDate={setSaveDate} />
-            : 
-            <Order saveDish={saveDish} saveDrinks={saveDrinks} saveAmount={saveAmount} setSaveAmount={setSaveAmount} saveEmail={saveEmail} setSaveEmail={setSaveEmail} saveDate={saveDate} setSaveDate={setSaveDate} />}
-          </Route>
-          <Route path="/receipt">
-            <Menu/>
-            { saveDish.length === 0 && saveDrinks.length === 0 && saveAmount.length === 0 
-            ? 
-            <Redirect to="/dishes"/> 
-            : 
-            <Receipt saveDish={saveDish} setSaveDish={setSaveDish} saveDrinks={saveDrinks} setSaveDrinks={setSaveDrinks} saveDate={saveDate} setSaveDate={setSaveDate} saveAmount={saveAmount} setSaveAmount={setSaveAmount} saveEmail={saveEmail} />}
-          </Route>
-        </Switch>
+
+        <div id="menuContainer">
+            <img id="logo" src="./img/beach.png" alt="logo"/>
+            <div>Restauranter</div>
+            <div>Produkter</div>
+            <div>Nyhedsbrev</div>
+            <div>Kontakt</div>
+            <h2>MENU</h2>
+        </div>
+
+        <CSSTransition timeout={300} classNames={{appear: 'fade-appear', exit:'fade-exit'}}>
+        <Breadcrumbs selectedDrinkIds={selectedDrinkIds} saveEmail={saveEmail} saveDrinks={saveDrinks} />
+        </CSSTransition>
+
+        <Route render={({location}) => (
+
+        <TransitionGroup>
+          <CSSTransition key={location.key} timeout={300} classNames='fade'>
+            <Switch location={location}>
+              <Route exact path="/" >
+                <div className="page">
+                <Slider saveDish={saveDish} setSaveDish={setSaveDish} saveDrinks={saveDrinks} setSaveDrinks={setSaveDrinks} saveDate={saveDate} setSaveDate={setSaveDate} saveAmount={saveAmount} setSaveAmount={setSaveAmount} saveEmail={saveEmail}/>
+                <FindOrder saveEmail={saveEmail} setSaveEmail={setSaveEmail} />
+                </div>
+              </Route>
+              <Route path="/dishes" >
+                <div className="page">
+                <Dishes saveDish={saveDish} setSaveDish={setSaveDish} saveEmail={saveEmail} />
+                </div>
+              </Route>
+              <Route path="/drinks">
+                <div className="page">
+                { saveDish.length === 0 
+                ? 
+                <Redirect to="/dishes"/> 
+                : 
+                <Drinks setSelectedDrinkIds={setSelectedDrinkIds} selectedDrinkIds={selectedDrinkIds} saveDrinks={saveDrinks} setSaveDrinks={setSaveDrinks} saveEmail={saveEmail} />}
+                </div>
+              </Route>
+              <Route path="/order">
+              <div className="page">
+                { saveDish.length === 0 && saveDrinks.length === 0 
+                ? 
+                <Redirect to="/dishes"/>  
+                : 
+                <Order newOrder={newOrder} setNewOrder={setNewOrder} month={month} setMonth={setMonth} day={day} setDay={setDay} time={time} setTime={setTime} year={year} setYear={setYear} amount={amount} setAmount={setAmount} email={email} setEmail={setEmail} saveDish={saveDish} saveDrinks={saveDrinks} saveAmount={saveAmount} setSaveAmount={setSaveAmount} saveEmail={saveEmail} setSaveEmail={setSaveEmail} saveDate={saveDate} setSaveDate={setSaveDate} />}
+              </div>
+              </Route>
+              <Route path="/receipt">
+              <div className="page">
+                { saveDish.length === 0 && saveDrinks.length === 0 && saveAmount.length === 0 
+                ? 
+                <Redirect to="/dishes"/> 
+                : 
+                <Receipt saveDish={saveDish} setSaveDish={setSaveDish} saveDrinks={saveDrinks} setSaveDrinks={setSaveDrinks} saveDate={saveDate} setSaveDate={setSaveDate} saveAmount={saveAmount} setSaveAmount={setSaveAmount} saveEmail={saveEmail} />}
+              </div>
+              </Route>
+            </Switch>
+          </CSSTransition>
+        </TransitionGroup>
+
+      )} />
       </Router>
     </div>
   );

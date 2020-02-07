@@ -92,6 +92,11 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+a {
+  text-decoration-line: none;
+  color: #BA2329;
+}
+
 /* Firefox */
 input[type=number] {
   -moz-appearance:textfield;
@@ -118,6 +123,28 @@ button:active, input:active, select:active {
   button:focus, input:focus, select:focus {outline:0;}
 
 /*********  HOME  **********/
+
+#breadcrumbContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  margin-top: 90px;
+  justify-items: center;
+  align-items: center;
+  padding: 0 20vw;
+  text-transform: uppercase;
+}
+
+.activeStep {
+  font-weight: bold;
+  background: rgba(186, 35, 40, 0.048);
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+.inactive {
+  opacity: 0.3;
+  font-style: italic;
+}
 
 #menuContainer {
   display: grid;
@@ -156,7 +183,7 @@ button:active, input:active, select:active {
   justify-items: center;
   height: 40vh;
   margin: 15px;
-  margin-top: 95px;
+  margin-top: 75px;
 }
 
 #slider {
@@ -222,9 +249,9 @@ button:active, input:active, select:active {
 }
 
 #emailError {
-  display: none;
+  /* display: none; */
   color: #BA2329;
-  padding-bottom: 10px;
+  padding-top: 10px;
 }
 
 #emailContainer {
@@ -360,7 +387,7 @@ button:active, input:active, select:active {
   grid-gap: 65px;
   padding: 15px;
   justify-items: center;
-  margin-top: 95px;
+  /* margin-top: 15px; */
 }
 
 .drinks {
@@ -423,7 +450,6 @@ button:active, input:active, select:active {
 }
 
 #drinksError {
-  display: none;
   color: #BA2329;
   margin-top: 10px;
 }
@@ -500,7 +526,7 @@ button:active, input:active, select:active {
   grid-template-columns: 2fr 1fr;
   grid-gap: 105px;
   padding: 15px;
-  margin-top: 95px;
+  /* margin-top: 15px; */
   position: relative;
 }
 
@@ -556,7 +582,7 @@ button:active, input:active, select:active {
   /* height: 30vh; */
   border-radius: 20px;
   position: fixed;
-  top: 109px;
+  top: 135px;
   right: 10vw;
 }
 
@@ -618,63 +644,131 @@ button:active, input:active, select:active {
   position: relative;
   margin-top: 15px;
   /* height: 60vh; */
-  margin-top: 115px;
+  /* margin-top: 115px; */
   background: white;
-  margin-bottom: 30px;
+  margin: 0px 10vw 30px;
 }
 
 #error, #errorAmount {
   color: #BA2329;
-  margin-bottom: 5px;
   position: absolute;
+  margin-top: 7px;
 }
+
+#date {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+#dateSelect {
+  display: flex;
+  flex-direction: column;
+}
+
+#dates {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 15px;
+}
+
+#timeSelect {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 35px;
+}
+
+select {
+  width: 100%;
+  font-size: 17px;
+  font-weight: bolder;
+}
+
+#email input, #email .button {
+  width: 100%;
+}
+
+/* #timeSelect div {
+  display: flex;
+  flex-direction: column;
+} */
 
 .errorBoxMargin {
   position: relative;
   padding: 5px 0 25px 5px;
+  display: grid;
+  justify-items: center;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.visible {
+  visibility: visible;
 }
 
 #orderWrapper {
   margin-top: 35px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-gap: 15px;
   justify-items: center;
   /* align-items: center; */
 }
 
 #emailWrapper {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  /* flex-direction: column; */
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  grid-column-gap: 0px;
+}
+
+#selection {
+  background: rgba(0, 124, 219, 0.068);
+  margin: 0 4vw 0 0 ;
+  padding: 20px;
+  border-radius: 20px;
 }
 
 #amount {
   display: flex;
-  margin: 15px 0 10px 0;
-  width: 130px;
-  justify-content: space-between;
+  /* margin: 15px 0 10px 0; */
+  width: 100%;
+  /* justify-content: space-between; */
 }
 
 #amount input {
   margin: 0 10px;
   text-align: center;
-  padding: 18px;
+  padding: 11px 30px;
   font-size: 20px;
   font-weight: bolder;
+  background: linear-gradient(to bottom, #ffffff 0%, rgba(0, 124, 219, 0.2) 100%);
 }
 
 .amountImg {
   width: 20px;
   cursor: pointer;
+  filter: invert(47%) sepia(77%) saturate(6617%) hue-rotate(190deg) brightness(97%) contrast(101%);
 }
 
-@media screen and (max-width: 930px) {
-  #orderWrapper {
-    grid-template-columns: 1fr;
+@media screen and (max-width: 1024px) {
+  #orderContainer {
+    margin: 105px 0vw 30px;
   }
 }
 
-@media screen and (max-width: 497px) {
+@media screen and (max-width: 726px) {
+  #orderContainer {
+    width: 90vw;
+    position: absolute;
+    left: -5vw;
+  }
+}
+
+@media screen and (max-width: 642px) {
   #orderContainer {
     box-shadow: 0px 0px 0px;
     padding: 0;
@@ -685,12 +779,26 @@ button:active, input:active, select:active {
   }
 }
 
+@media screen and (max-width: 562px) {
+  #dates {
+    grid-template-columns: 1fr;
+  }
+  #timeSelect {
+    grid-template-columns: 1fr;
+  }
+  #emailWrapper {
+    grid-template-columns: 1fr;
+  }
+  #selection {
+    display: none;
+  }
+}
 
 /*********  RECEIPT  **********/
 
 #receiptContainer {
   padding: 15px;
-  margin-top: 95px;
+  margin-top: 0px;
   display: grid;
   justify-items: center;
 }
@@ -702,7 +810,7 @@ button:active, input:active, select:active {
   padding: 35px;
   width: 50vw;
   min-height: 40vh;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .receiptDrink, #dishWrap {
@@ -738,4 +846,35 @@ button:active, input:active, select:active {
   #receiptContainer a {
     width: 100%;
   }
+}
+
+
+/******************* TRANSITIONS ***********************/
+
+/* simple - enter transition 300ms, exit 150ms */
+.fade-appear,
+.fade-enter {
+    opacity: 0;
+    z-index: 1;
+}
+.fade-appear-active,
+.fade-enter.fade-enter-active {
+    opacity: 1;
+    transition: opacity 300ms linear 150ms;
+}
+
+.fade-exit {
+    opacity: 1;
+}
+
+.fade-exit.fade-exit-active {
+    opacity: 0;
+    transition: opacity 150ms linear;
+}
+
+.page {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  right: 0;
 }

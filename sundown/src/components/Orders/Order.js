@@ -3,23 +3,15 @@ import {Link} from "react-router-dom";
 import { setDate } from 'date-fns/esm/fp';
 import EmailValidator from 'email-validator';
 import moment from 'moment';
+import classNames from 'classnames';
 
-function Order({saveAmount, setSaveAmount, saveEmail, setSaveEmail, saveDate, setSaveDate, saveDish, saveDrinks}) {
-    const [month, setMonth] = useState({
-        name: '',
-        value: ''
-    })
-    const [day, setDay] = useState('');
-    const [year, setYear] = useState('');
-    const [time, setTime] = useState('');
+function Order({newOrder, setNewOrder, month, setMonth, day, setDay, year, setYear, amount, setAmount, time, setTime, email, setEmail, saveAmount, setSaveAmount, saveEmail, setSaveEmail, saveDate, setSaveDate, saveDish, saveDrinks}) {
     const currentMonth = (new Date()).getMonth() + 1
     const currentYear = moment().year();
-
     const [dateSelected, setDateSelected] = useState('')
-
-    let [amount, setAmount] = useState(1);
-    const [email, setEmail] = useState('');
     const [orderButton, setOrderButton] = useState('Order');
+    const [errorEmail, setErrorEmail] = useState('');
+    const [errorAmount, setErrorAmount] = useState('');
 
     const monthsInYear = moment.months()
     const daysInMonth = moment(`${year}-${month.value}`).daysInMonth();
@@ -40,6 +32,7 @@ function Order({saveAmount, setSaveAmount, saveEmail, setSaveEmail, saveDate, se
 
     const addPeople = () => {
         amount += 1;
+        setNewOrder(true);
         if (isNaN(amount) === true) {
             setAmount(1);
         } else if (amount > 10) {
@@ -54,6 +47,7 @@ function Order({saveAmount, setSaveAmount, saveEmail, setSaveEmail, saveDate, se
 
     const minusPeople = () => {
         amount -= 1;
+        setNewOrder(true);
         if (amount < 0 || amount === 0) {
             amount += 1;
             setAmount(amount);
@@ -67,9 +61,9 @@ function Order({saveAmount, setSaveAmount, saveEmail, setSaveEmail, saveDate, se
     useEffect(() => {
         const savedData = localStorage.getItem(saveEmail);
         const dataParse = JSON.parse(savedData);
-        console.log(dataParse, saveEmail);
-
-        if(saveEmail) {
+        // console.log(dataParse, saveEmail);
+  
+        if (saveEmail) {
             let setLocalData = {
                 newAmount: dataParse[0].amount,
                 newDate: dataParse[0].date,
@@ -89,15 +83,36 @@ function Order({saveAmount, setSaveAmount, saveEmail, setSaveEmail, saveDate, se
             setYear(setDateValues.newYear);
             setDay(setDateValues.newDay);
             setTime(setDateValues.newTime);
-            console.log(setLocalData);
-            console.log(setDateValues);
+            // console.log(setLocalData);
+            // console.log(setDateValues);
             setEmail(saveEmail);
             setOrderButton('Update order');
             document.getElementById('emailInput').disabled = 'true';
+        } else if (newOrder === true) {
+            console.log('No logged user, but pre saved data')
+            console.log(newOrder)
+            let setPreSaved = {
+                amountPre: amount,
+                monthPre: {
+                    name: month.name,
+                    value: Number(month.value)
+                },
+                dayPre: Number(day),
+                timePre: Number(time),
+                yearPre: Number(year)
+            }
+            let setPreDateSelected = moment(new Date(setPreSaved.yearPre, setPreSaved.monthPre.value - 1, setPreSaved.dayPre, setPreSaved.timePre)).format('LLLL')
+            setAmount(amount);
+            setEmail(email);
+            setMonth(month);
+            setDay(day);
+            setTime(time);
+            setYear(year);
+            setDateSelected(setPreDateSelected);
         } else {
             console.log('No logged user')
             let setDefault = {
-                amountDef: 1,
+                amountDef: 2,
                 monthDef: {
                     name: moment.months((new Date()).getMonth()),
                     value: (new Date()).getMonth() + 1
@@ -113,117 +128,140 @@ function Order({saveAmount, setSaveAmount, saveEmail, setSaveEmail, saveDate, se
             setTime(setDefault.timeDef);
             setYear(setDefault.yearDef);
             setDateSelected(setDateDefault);
-            console.log(setDefault, setDateDefault);
-        }
+            // console.log(setDefault, setDateDefault);
+        } 
         
-    }, [saveEmail])
+    }, [saveEmail, email])
 
-    console.log(dateSelected)
-    console.log(dateSelected.indexOf('Sunday'), dateSelected.indexOf('Saturday'))
+    // console.log(dateSelected)
+    // console.log(dateSelected.indexOf('Sunday'), dateSelected.indexOf('Saturday'))
 
     useEffect(() => {
         setDateSelected(moment(new Date(year, month.value - 1, day, time)).format('LLLL'))
-        console.log(dateSelected);
+        // console.log(dateSelected);
     }, [month, day, time, year])
 
-    useEffect(() => {
-        if (amount === 1) {
-            document.querySelector('.addPeople').style.visibility = 'visible';
-            document.querySelector('.lessPeople').style.visibility = 'hidden';
-            document.getElementById('errorAmount').innerHTML = '';
-        } else if (amount < 1) {
-            document.querySelector('.addPeople').style.visibility = 'visible';
-            document.querySelector('.lessPeople').style.visibility = 'hidden';
-            document.getElementById('errorAmount').innerHTML = 'Sorry, amount has to be between 1 and 10';
-        } else if (amount > 10) {
-            document.querySelector('.addPeople').style.visibility = 'hidden';
-            document.querySelector('.lessPeople').style.visibility = 'visible';
-            document.getElementById('errorAmount').innerHTML = 'Sorry, amount has to be between 1 and 10';
-        } else if (amount === 10) {
-            document.querySelector('.addPeople').style.visibility = 'hidden';
-            document.querySelector('.lessPeople').style.visibility = 'visible';
-            document.getElementById('errorAmount').innerHTML = '';
-        } else if (isNaN(amount) === true) {
-            document.querySelector('.addPeople').style.visibility = 'visible';
-            document.querySelector('.lessPeople').style.visibility = 'hidden';
-            document.getElementById('errorAmount').innerHTML = 'Add a number or use arrows';
+    const amountOnChange = (event) => {
+        setNewOrder(true)
+        let amountValue = parseInt(event.target.value)
+        let wrongAmount = 'Sorry, amount has to be between 1 and 10'
+        let noAmount = 'Add a number or use arrows'
+        setAmount(amountValue)
+        console.log(amount, errorAmount)
+        if (amountValue < 1) {
+            setErrorAmount(wrongAmount)
+        } else if (amountValue > 10) {
+            setErrorAmount(wrongAmount)
+        } else if (isNaN(amountValue) === true) {
+            setErrorAmount(noAmount)
         } else {
-            document.querySelector('.addPeople').style.visibility = 'visible';
-            document.querySelector('.lessPeople').style.visibility = 'visible';
-            document.getElementById('errorAmount').innerHTML = '';
+            setErrorAmount('')
         }
-    }, [amount])
+    }
 
     const saveOrder = () => {
-        if (amount > 10 || amount < 1) {
-            document.getElementById('errorAmount').innerHTML = 'Sorry, amount has to be between 1 and 10';
-        }
         const validatedEmail = EmailValidator.validate(email);
-        console.log(validatedEmail);
         if (dateSelected.indexOf('Saturday') !== -1 || dateSelected.indexOf('Sunday') !== -1 ) {
-            document.getElementById('error').innerHTML = 'You cannot book Sunday and Saturday!';
+            setErrorEmail('You cannot book Sunday and Saturday!')
+        } else if (amount > 10 || amount < 1) {
+            setErrorAmount('Sorry, amount has to be between 1 and 10')
         } else if (validatedEmail === true && saveDish.length !== 0 && saveDrinks.length !== 0) {
+            setErrorEmail('');
             setSaveAmount(amount);
             setDateSelected(moment(new Date(year, month.value - 1, day, time)).format("LLLL"))
             setSaveDate(dateSelected);
             setSaveEmail(email);
         } else if (email.length === 0) {
-            document.getElementById('error').innerHTML = 'Sorry, email cannot be empty!';
+            setErrorEmail('Sorry, email cannot be empty!')
         } else if (validatedEmail === false) {
-            console.log(saveDish.length);
-            document.getElementById('error').innerHTML = 'Sorry, email not valid!';
+            setErrorEmail('Sorry, email not valid!')
         } else {
-            document.getElementById('error').innerHTML = 'You have to pick drinks & food!';
+            setErrorEmail('You have to pick drinks & food!')
         }
     }
-    console.log({year, currentMonth, currentYear});
+    // console.log({year, currentMonth, currentYear});
     return (
-        <div id="orderContainer">
+        <div className="page" id="orderContainer">
             <h2>Order details</h2>
             <div id="orderWrapper">
                 <div id="date">
-                    <h4 className="blueFont">Pick date and time</h4><br/>
                     <div id="dateSelect">
-                        <select value={month.name} id="month" onChange={(event) => setMonth({name: event.target.value, value: moment().month(event.target.value).format("M")})}>
-                            {monthsInYear.map((month) => (
-                                <option value={month} disabled={moment().months(month).format('M') < currentMonth && year === currentYear}>{month}</option>
-                            ))}
-                        </select>
-                        <select value={day} id="day" onChange={(event) => setDay(event.target.value)}>
-                            {dayRows}
-                        </select>
-                        <select value={year} id="year" onChange={(event) => setYear(Number(event.target.value))}>
-                            {yearRows}
-                        </select>
-                        <select value={time} id="time" onChange={(event) => setTime(event.target.value)}>
-                            <option value="16">16:00</option>
-                            <option value="17">17:00</option>
-                            <option value="18">18:00</option>
-                            <option value="19">19:00</option>
-                            <option value="20">20:00</option>
-                            <option value="21">21:00</option>
-                            <option value="22">22:00</option>
-                            <option value="23">23:00</option>
-                        </select>
-                    </div><br/>
-                    <h4 className="blueFont">Selected date:</h4> 
-                    <p>{dateSelected}</p>
+                        <h4 className="blueFont">1. Pick date</h4><br/>
+                        <div id="dates">
+                            <select value={month.name} id="month" onChange={(event) => {
+                                setMonth({name: event.target.value, value: Number(moment().month(event.target.value).format("M"))});
+                                setNewOrder(true)
+                            }}>
+                                {monthsInYear.map((month) => (
+                                    <option value={month} disabled={moment().months(month).format('M') < currentMonth && year === currentYear}>{month}</option>
+                                ))}
+                            </select>
+                            <select value={day} id="day" onChange={(event) => {
+                                setDay(Number(event.target.value));
+                                setNewOrder(true)
+                            }}>
+                                {dayRows}
+                            </select>
+                            <select value={year} id="year" onChange={(event) => {
+                                setYear(Number(event.target.value));
+                                setNewOrder(true)
+                            }}>
+                                {yearRows}
+                            </select>
+                        </div><br/>
+                        <div id="timeSelect">
+                            <div>
+                            <h4 className="blueFont">2. Pick time</h4><br/>
+                            <select value={time} id="time" onChange={(event) => {
+                                setTime(event.target.value);
+                                setNewOrder(true)
+                            }}>
+                                <option value="16">4:00 PM</option>
+                                <option value="17">5:00 PM</option>
+                                <option value="18">6:00 PM</option>
+                                <option value="19">7:00 PM</option>
+                                <option value="20">8:00 PM</option>
+                                <option value="21">9:00 PM</option>
+                                <option value="22">10:00 PM</option>
+                                <option value="23">11:00 PM</option>
+                            </select>
+                            </div>
+                            <div>
+                                <h4 className="blueFont">3. Select amount of people</h4><br/>
+                                <div id="amount">
+                                    <img onClick={minusPeople} className={classNames("amountImg lessPeople",{"hidden": amount === 1 || amount < 1 || isNaN(amount), "visible": amount > 1})} src="./img/less.png" alt="less"/>
+                                    <input type="number" min="1" max="10" maxLength="2" value={amount} onChange={amountOnChange} />
+                                    <img onClick={addPeople} className={classNames("amountImg addPeople",{"hidden": amount === 10 || amount > 10, "visible": amount < 10 })} src="./img/more.png" alt="more"/>
+                                </div>
+                                <div className="errorBoxMargin"><p id="errorAmount">{errorAmount}</p></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div id="emailWrapper">
-                    <h4 className="blueFont">Select amount of people</h4><br/>
-                    <div id="amount">
-                        <img onClick={minusPeople} className="amountImg lessPeople" src="./img/less.png" alt="less"/>
-                        <input type="number" min="1" max="10" maxLength="2" value={amount} onChange={(event) => setAmount(parseInt(event.target.value))} />
-                        <img onClick={addPeople} className="amountImg addPeople" src="./img/more.png" alt="more"/>
+                    <div id="selection">
+                        <h4 className="blueFont">Selected date & time:</h4><br/>
+                        <p>{dateSelected}</p><br/>
+                        <h4 className="blueFont">Selected amount:</h4><br/>
+                        <p>{amount >= 1 && amount <= 10 ? amount : 'Choose'} people</p>
                     </div>
-                    <div className="errorBoxMargin"><p id="errorAmount"></p></div>
-                    <br/>
-                    <label>Enter email</label>
-                    <input placeholder="Enter email" id="emailInput" name="email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
-                    <Link to={EmailValidator.validate(email) === true && saveDish.length !== 0 && saveDrinks.length !== 0 && amount <= 10 && amount >= 1 && dateSelected.indexOf('Saturday') === -1 && dateSelected.indexOf('Sunday') === -1 ? '/receipt' : '/order'}>
-                        <button onClick={saveOrder} className="button">{orderButton}</button>
-                    </Link>
-                    <div className="errorBoxMargin"><p id="error"></p></div>
+                
+                    <div id="email">
+                        <h4 className="blueFont">4. Enter your email</h4><br/>
+                        <input placeholder="Enter email" id="emailInput" name="email" type="email" value={email} onChange={(event) => {
+                            setEmail(event.target.value);
+                            setNewOrder(true)
+                            }} />
+                        {
+                            EmailValidator.validate(email) === true && saveDish.length !== 0 && saveDrinks.length !== 0 && amount <= 10 && amount >= 1 && dateSelected.indexOf('Saturday') === -1 && dateSelected.indexOf('Sunday') === -1 ?
+                            <Link to='/receipt'>
+                            <button onClick={saveOrder} className="button">{orderButton}</button>
+                            </Link>
+                            :
+                            <button onClick={saveOrder} className="button">{orderButton}</button>
+                        }
+                        <div className="errorBoxMargin"><p id="error">{errorEmail}</p></div>
+                    </div>
                 </div>
             </div>
         </div>

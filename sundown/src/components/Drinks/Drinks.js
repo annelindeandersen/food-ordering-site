@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 
-const Drinks = ({saveDrinks, setSaveDrinks, saveEmail}) => {
-    let [selectedDrinkIds, setSelectedDrinkIds] = useState([]);
+const Drinks = ({selectedDrinkIds, setSelectedDrinkIds, saveDrinks, setSaveDrinks, saveEmail}) => {
+    // let [selectedDrinkIds, setSelectedDrinkIds] = useState([]);
+    const [message, setMessage] = useState('');
     const [drinks, setDrinks] = useState([
             {
                 name: '',
@@ -16,13 +17,16 @@ const Drinks = ({saveDrinks, setSaveDrinks, saveEmail}) => {
         const savedDrinksArr = JSON.parse(savedDrinks);
         console.log(savedDrinksArr);
         console.log(saveEmail);
-
+        if (saveDrinks) {
+            const mapSavedDrinks = saveDrinks.map(drink => (drink.name))
+            console.log(mapSavedDrinks)
+            setSelectedDrinkIds(mapSavedDrinks);
+        }
         if (saveEmail) {
             const mapDrinks = savedDrinksArr[0].drinks.map((drink) => (drink.name));
             console.log(mapDrinks);
             setSelectedDrinkIds(mapDrinks);
-        }
-
+        } 
         const getApi = async () => {
             const result = await fetch('https://api.punkapi.com/v2/beers');
             const body = await result.json();
@@ -32,9 +36,10 @@ const Drinks = ({saveDrinks, setSaveDrinks, saveEmail}) => {
         getApi();
     }, [saveEmail, saveDrinks])
 
+
     const toggleDrink = ({key}) => {
         const drinksArr = [...selectedDrinkIds];
-        document.getElementById('drinksError').style.display = 'none';
+        setMessage('');
         if (key.name) {
             const drink = drinksArr.indexOf(key.name);
             console.log(drink);
@@ -49,16 +54,16 @@ const Drinks = ({saveDrinks, setSaveDrinks, saveEmail}) => {
     }
 
     const selectedDrinks = drinks.filter(drink => selectedDrinkIds.indexOf(drink.name) !== -1);
+    // console.log(selectedDrinks)
 
     const setDrinkOrError = () => {
         setSaveDrinks(selectedDrinks);
         console.log(saveDrinks);
-        if(saveDrinks.length === 0) {
+        if(selectedDrinks.length === 0) {
             console.log('no saved drinks')
-            document.getElementById('drinksError').style.display = 'block';
+            setMessage('Please select your drink!');
         }
     }
-
 
     return(
         <div id="drinksContainer">
@@ -86,11 +91,14 @@ const Drinks = ({saveDrinks, setSaveDrinks, saveEmail}) => {
                 ))}
                 {/* <p><b>{(selectedDrinkIds).join("\n")}</b></p> */}
                 <br/>
-                <Link to={selectedDrinkIds.length > 0 ? '/order' : '/drinks'}>
+                {selectedDrinkIds.length > 0 ?
+                <Link to='/order'>
                     <button onClick={setDrinkOrError} className="button">Next</button>
-                    {/* <button onClick={() => setSaveDrinks(selectedDrinkIds)} className="button">Next</button> */}
                 </Link>
-                <b id="drinksError">Please select your drink!</b>
+                :
+                <button onClick={setDrinkOrError} className="button">Next</button>
+            }
+            <b id="drinksError">{message}</b>
             </div>
         </div>
     )

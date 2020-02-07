@@ -32,13 +32,24 @@ function Dishes({saveDish, setSaveDish, saveEmail}) {
                 })
                 document.querySelector('.dishImg').style.display = 'none';
                 return console.log(dish, 'new');
-            } else if (EmailValidator.validate(saveEmail) == false) {
+            } else if (EmailValidator.validate(saveEmail) === false) {
                 getApi();
                 document.querySelector('.errorBox').style.display = 'flex';
             } else if (savedEmail !== true) {
                 getApi();
                 document.querySelector('.errorBox').style.display = 'flex';
             } 
+        } else if (saveDish) {
+            setDish({
+                meals: [
+                    {
+                        strMeal: saveDish.strMeal,
+                        strInstructions: saveDish.strInstructions,
+                        strMealThumb: saveDish.strMealThumb
+                    }
+                ]
+            })
+            document.querySelector('.dishImg').style.display = 'none';
         } else {
             getApi();
         }

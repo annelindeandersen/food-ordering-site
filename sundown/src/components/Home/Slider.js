@@ -1,17 +1,13 @@
 import React, { useEffect } from 'react';
-// import ReactDOM from 'react-dom';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-// import { Carousel } from 'react-responsive-carousel';
 import Flickity from 'flickity';
 import {Link} from 'react-router-dom';
 import EmailValidator from 'email-validator';
-import moment from 'moment';
  
 function Slider({saveDish, setSaveDish, saveDrinks, setSaveDrinks, saveDate, setSaveDate, saveAmount, setSaveAmount, saveEmail}) {
-    // console.log(localStorage.getItem(saveEmail))
+    
     useEffect(() => {
         const getData = localStorage.getItem(saveEmail);
-        // setSavedEmail(getData);
         const dataParse = JSON.parse(getData);
         console.log(dataParse);
 
@@ -25,7 +21,6 @@ function Slider({saveDish, setSaveDish, saveDrinks, setSaveDrinks, saveDate, set
         }
 
         var flkty = new Flickity( '.main-carousel', {
-            // accessibility: true,
             adaptiveHeight: true,
             autoPlay: 5000,
             cellAlign: 'center',
