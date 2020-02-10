@@ -33,6 +33,9 @@ function Order({newOrder, setNewOrder, month, setMonth, day, setDay, year, setYe
     const addPeople = () => {
         amount += 1;
         setNewOrder(true);
+        if (amount >= 1 && amount <= 10) {
+            setErrorAmount('')
+        }
         if (isNaN(amount) === true) {
             setAmount(1);
         } else if (amount > 10) {
@@ -48,11 +51,15 @@ function Order({newOrder, setNewOrder, month, setMonth, day, setDay, year, setYe
     const minusPeople = () => {
         amount -= 1;
         setNewOrder(true);
+        if (amount >= 1 && amount <= 10) {
+            setErrorAmount('')
+        }
         if (amount < 0 || amount === 0) {
             amount += 1;
             setAmount(amount);
             console.log(amount);
         } else {
+            // setErrorAmount('')
             setAmount(amount);
             console.log(amount);
         }
@@ -181,7 +188,7 @@ function Order({newOrder, setNewOrder, month, setMonth, day, setDay, year, setYe
     }
     // console.log({year, currentMonth, currentYear});
     return (
-        <div className="page" id="orderContainer">
+        <div id="orderContainer">
             <h2>Order details</h2>
             <div id="orderWrapper">
                 <div id="date">

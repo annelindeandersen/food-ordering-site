@@ -16,7 +16,7 @@ function Slider({saveDish, setSaveDish, saveDrinks, setSaveDrinks, saveDate, set
                 setSaveAmount(dataParse[0].amount);
                 setSaveDrinks(dataParse[0].drinks);
                 setSaveDate(dataParse[0].date);
-                setSaveDish(dataParse[0].dish.strMeal);
+                setSaveDish(dataParse[0].dish);
             }
         }
 
@@ -46,8 +46,8 @@ console.log(saveDrinks);
                 <h3>Order flow box</h3>
                 <div className="order">
                     <h4 className="blueFont">{saveDish && localStorage.getItem(saveEmail) !== null ? `Your foods & drinks` : 'Nothing added yet'}</h4>
-                    <p>{saveDish && localStorage.getItem(saveEmail) !== null ? `Dish: ${saveDish}` : ''}</p>
-                    <p>{saveDrinks && saveDrinks.length > 0 ? <p>Drinks: {saveDrinks.map((drink) => (<span key={drink}>{drink.name}, </span>))}</p> : ''}</p><br/>
+                    <p>{saveDish && localStorage.getItem(saveEmail) !== null ? `Dish: ${saveDish.strMeal}` : ''}</p>
+                    <p>{saveDrinks && saveDrinks.length > 0 && localStorage.getItem(saveEmail) !== null ? <p>Drinks: {saveDrinks.map((drink) => (<span key={drink}>{drink.name}, </span>))}</p> : ''}</p><br/>
                     <h4 className="blueFont">{saveDate && localStorage.getItem(saveEmail) !== null ? `Your other info` : ''}</h4>
                     <p>{saveDate && localStorage.getItem(saveEmail) !== null ? `Date: ${saveDate}` : ''}</p>
                     <p>{saveAmount && localStorage.getItem(saveEmail) !== null ? `Amount: ${saveAmount}` : ''}</p>

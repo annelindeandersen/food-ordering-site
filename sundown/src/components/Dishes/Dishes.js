@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import EmailValidator from 'email-validator';
 
 function Dishes({saveDish, setSaveDish, saveEmail}) {
+    const theSavedDish = saveDish
     const [savedEmail, setSavedEmail] = useState(-1)
     const [dish, setDish] = useState({
         meals: [
@@ -19,27 +20,7 @@ function Dishes({saveDish, setSaveDish, saveEmail}) {
         console.log(saveEmail)
         const savedDishArr = JSON.parse(savedDish);
 
-        if (saveEmail.length !== 0) {
-            if (localStorage.getItem(saveEmail) !== null) {
-                setDish({
-                    meals: [
-                        {
-                            strMeal: savedDishArr[0].dish.strMeal,
-                            strInstructions: savedDishArr[0].dish.strInstructions,
-                            strMealThumb: savedDishArr[0].dish.strMealThumb
-                        }
-                    ]
-                })
-                document.querySelector('.dishImg').style.display = 'none';
-                return console.log(dish, 'new');
-            } else if (EmailValidator.validate(saveEmail) === false) {
-                getApi();
-                document.querySelector('.errorBox').style.display = 'flex';
-            } else if (savedEmail !== true) {
-                getApi();
-                document.querySelector('.errorBox').style.display = 'flex';
-            } 
-        } else if (saveDish) {
+        if (saveDish) {
             setDish({
                 meals: [
                     {
@@ -50,6 +31,19 @@ function Dishes({saveDish, setSaveDish, saveEmail}) {
                 ]
             })
             document.querySelector('.dishImg').style.display = 'none';
+        } else if (localStorage.getItem(saveEmail) !== null) {
+            // if (localStorage.getItem(saveEmail) !== null) {
+            setDish({
+                meals: [
+                    {
+                        strMeal: savedDishArr[0].dish.strMeal,
+                        strInstructions: savedDishArr[0].dish.strInstructions,
+                        strMealThumb: savedDishArr[0].dish.strMealThumb
+                    }
+                ]
+            })
+            document.querySelector('.dishImg').style.display = 'none';
+            console.log(dish, 'new'); 
         } else {
             getApi();
         }
@@ -60,17 +54,11 @@ function Dishes({saveDish, setSaveDish, saveEmail}) {
         const body = await result.json();
         console.log(body);
         setDish(body);
+        setSaveDish(body.meals[0]);
     }
 
     return(
         <div id="dishesContainer">
-            <div className="errorBox">
-                <h1>Oops!</h1>
-                <p>No order to be found with that email.</p><br/>
-                <Link to='/'>
-                    <button onClick={() => document.querySelector('.errorBox').style.display = 'none'} className="button">Go back</button>
-                </Link>
-            </div>
             <div className="dish">
                 {dish.meals.map((key, index) => (
                     <div key={key.idMeal}>

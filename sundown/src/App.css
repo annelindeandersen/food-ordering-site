@@ -127,11 +127,14 @@ button:active, input:active, select:active {
 #breadcrumbContainer {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  margin-top: 90px;
+  top: 90px;
   justify-items: center;
   align-items: center;
   padding: 0 20vw;
   text-transform: uppercase;
+  position: fixed;
+  z-index: 10;
+  width: 80vw;
 }
 
 .activeStep {
@@ -183,7 +186,7 @@ button:active, input:active, select:active {
   justify-items: center;
   height: 40vh;
   margin: 15px;
-  margin-top: 75px;
+  margin-top: -20px;
 }
 
 #slider {
@@ -300,7 +303,7 @@ button:active, input:active, select:active {
 @media screen and (max-width: 955px) { 
   #sliderContainer {
     height: 43vh;
-    margin-top: 110px;
+    /* margin-top: 110px; */
   }
   #slider {
     min-height: 35vh;
@@ -646,7 +649,7 @@ button:active, input:active, select:active {
   /* height: 60vh; */
   /* margin-top: 115px; */
   background: white;
-  margin: 0px 10vw 30px;
+  margin: 16px 10vw 30px;
 }
 
 #error, #errorAmount {
@@ -756,7 +759,10 @@ select {
 
 @media screen and (max-width: 1024px) {
   #orderContainer {
-    margin: 105px 0vw 30px;
+    margin: 16px 0vw 30px;
+  }
+  #breadcrumbContainer {
+    padding: 0 10vw;
   }
 }
 
@@ -776,6 +782,9 @@ select {
     width: 90vw;
     position: absolute;
     left: -5vw;
+  }
+  #breadcrumbContainer {
+    padding: 0 3vw;
   }
 }
 
@@ -810,7 +819,7 @@ select {
   padding: 35px;
   width: 50vw;
   min-height: 40vh;
-  margin-top: 15px;
+  margin-top: 0px;
 }
 
 .receiptDrink, #dishWrap {
@@ -874,7 +883,7 @@ select {
 
 .page {
   position: absolute;
-  top: 30px;
+  top: 120px;
   left: 0;
   right: 0;
 }

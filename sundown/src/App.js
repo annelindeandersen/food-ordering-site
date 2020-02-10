@@ -53,7 +53,9 @@ function App() {
       <Router>
 
         <div id="menuContainer">
-            <img id="logo" src="./img/beach.png" alt="logo"/>
+            <Link to='/'>
+              <img id="logo" src="./img/beach.png" alt="logo"/>
+            </Link>
             <div>Restauranter</div>
             <div>Produkter</div>
             <div>Nyhedsbrev</div>
@@ -83,7 +85,7 @@ function App() {
               </Route>
               <Route path="/drinks">
                 <div className="page">
-                { saveDish.length === 0 
+                { saveDish === '' 
                 ? 
                 <Redirect to="/dishes"/> 
                 : 
@@ -92,7 +94,7 @@ function App() {
               </Route>
               <Route path="/order">
               <div className="page">
-                { saveDish.length === 0 && saveDrinks.length === 0 
+                { saveDish === '' && saveDrinks === '' 
                 ? 
                 <Redirect to="/dishes"/>  
                 : 
@@ -101,7 +103,7 @@ function App() {
               </Route>
               <Route path="/receipt">
               <div className="page">
-                { saveDish.length === 0 && saveDrinks.length === 0 && saveAmount.length === 0 
+                { saveDish === '' && saveDrinks === '' && saveAmount === '' 
                 ? 
                 <Redirect to="/dishes"/> 
                 : 
