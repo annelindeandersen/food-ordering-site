@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 
 const Drinks = ({selectedDrinkIds, setSelectedDrinkIds, saveDrinks, setSaveDrinks, saveEmail}) => {
-    // let [selectedDrinkIds, setSelectedDrinkIds] = useState([]);
     const [message, setMessage] = useState('');
     const [drinks, setDrinks] = useState([
             {
@@ -17,6 +16,7 @@ const Drinks = ({selectedDrinkIds, setSelectedDrinkIds, saveDrinks, setSaveDrink
         const savedDrinksArr = JSON.parse(savedDrinks);
         console.log(savedDrinksArr);
         console.log(saveEmail);
+        console.log(saveDrinks)
         if (saveDrinks) {
             const mapSavedDrinks = saveDrinks.map(drink => (drink.name))
             console.log(mapSavedDrinks)
@@ -34,7 +34,7 @@ const Drinks = ({selectedDrinkIds, setSelectedDrinkIds, saveDrinks, setSaveDrink
             setDrinks(body);
         }
         getApi();
-    }, [saveEmail, saveDrinks])
+    }, [saveEmail, saveDrinks, setSelectedDrinkIds])
 
 
     const toggleDrink = ({key}) => {
@@ -69,10 +69,10 @@ const Drinks = ({selectedDrinkIds, setSelectedDrinkIds, saveDrinks, setSaveDrink
         <div id="drinksContainer">
             <div className="drinks">
                 {drinks.map((key, index) => (
-                    <div onClick={() => toggleDrink({key})} className='drink'  key={key.id}>
+                    <div onClick={() => toggleDrink({key})} className='drink'  key={index}>
                         <div className={classNames({'btn-pressed': selectedDrinkIds.indexOf(key.name) >= 0})}></div>
-                        <img className="drinkImg" src={key.image_url} key={key.image_url} alt="img"/>
-                        <h4 className="drinkTitle" key={key.name}>{key.name}</h4>
+                        <img className="drinkImg" src={key.image_url} alt="img"/>
+                        <h4 className="drinkTitle" >{key.name}</h4>
                     </div>
                 ))}
             </div>
@@ -89,7 +89,6 @@ const Drinks = ({selectedDrinkIds, setSelectedDrinkIds, saveDrinks, setSaveDrink
                         <div className="unSelect" onClick={() => toggleDrink({key})}>X</div>
                     </div>
                 ))}
-                {/* <p><b>{(selectedDrinkIds).join("\n")}</b></p> */}
                 <br/>
                 {selectedDrinkIds.length > 0 ?
                 <Link to='/order'>

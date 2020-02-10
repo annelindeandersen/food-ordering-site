@@ -9,7 +9,6 @@ body {
   height: 88.2vh;
   background-attachment: fixed;
   padding-bottom: 30px;
-  /* overflow: hidden; */
 }
 
 .App {
@@ -102,10 +101,6 @@ input[type=number] {
   -moz-appearance:textfield;
 }
 
-.input-error {
-  /* border: 1px solid red; */
-}
-
 @media screen and (max-width: 955px) {
   input {
     width: 100%;
@@ -159,10 +154,7 @@ button:active, input:active, select:active {
   font-weight: bolder;
   cursor: pointer;
   color: white;
-  /* border-bottom: #007DDB 2px solid; */
-  /* background: linear-gradient(#007DDB, white); */
   background: linear-gradient(#007DDB, rgb(135, 187, 226));
-  /* background:linear-gradient(to top, #BA2329, rgb(175, 74, 74), rgb(190, 117, 127), rgb(192, 133, 182),rgb(135, 126, 189), rgb(71, 129, 173) , #007DDB); */
   position: fixed;
   top: 0;
   left: 0;
@@ -190,13 +182,11 @@ button:active, input:active, select:active {
 }
 
 #slider {
-  /* border: 1px solid black; */
   box-shadow: 0px 0px 10px rgba(0, 124, 219, 0.199);
   border-radius: 20px;
   width: 100%;
   min-height: 35vh;
   overflow: hidden;
-  /* position: relative; */
 }
 
 .main-carousel, .carousel-cell {
@@ -218,7 +208,6 @@ button:active, input:active, select:active {
 }
 
 #orderflow {
-  /* border: 1px solid black; */
   box-shadow: 0px 0px 10px rgba(0, 124, 219, 0.199);
   border-radius: 20px;
   width: 100%;
@@ -227,7 +216,6 @@ button:active, input:active, select:active {
   justify-content: space-between;
   padding: 25px;
   background: white;
-  /* text-transform: uppercase; */
 }
 
 #findOrderContainer {
@@ -240,27 +228,22 @@ button:active, input:active, select:active {
 }
 
 #findOrder {
-  /* border: 1px solid black; */
   box-shadow: 0px 0px 10px rgba(0, 124, 219, 0.199);
   border-radius: 20px;
   width: 100%;
   display: flex;
   flex-direction: column;
-  /* justify-content: space-evenly; */
   padding: 25px;
   background: white;
 }
 
 #emailError {
-  /* display: none; */
   color: #BA2329;
   padding-top: 10px;
 }
 
 #emailContainer {
   display: grid;
-  /* flex-direction: column; */
-  /* justify-content: center; */
   margin-top: 10vh;
 }
 
@@ -269,13 +252,10 @@ button:active, input:active, select:active {
 }
 
 #contentBox {
-  /* border: 1px solid black; */
   background: rgba(0, 124, 219, 0.199);
   border-radius: 20px;
   width: 100%;
   padding: 25px;
-  /* color: white; */
-  /* text-transform: uppercase; */
 }
 
 #contentBox p {
@@ -288,6 +268,14 @@ button:active, input:active, select:active {
 
 .order h4:last-of-type {
   margin-top: 7px;
+}
+
+@media screen and (max-width: 1194px) {
+  /* .carousel-cell img {
+    height: 100%;
+    max-width: none !important;
+    width: auto;
+  } */
 }
 
 @media screen and (max-width: 1059px) { 
@@ -303,7 +291,6 @@ button:active, input:active, select:active {
 @media screen and (max-width: 955px) { 
   #sliderContainer {
     height: 43vh;
-    /* margin-top: 110px; */
   }
   #slider {
     min-height: 35vh;
@@ -368,16 +355,11 @@ button:active, input:active, select:active {
 }
 
 @media screen and (max-width: 533px) {
-  /* #sliderContainer {
-    grid-template-columns: 1fr;
-    height: 75vh;
-  } */
   #slider {
     height: 35vh;
   }
   .carousel-cell img {
     height: 100%;
-    /* max-width: none !important; */
     width: auto;
   }
 }
@@ -387,10 +369,7 @@ button:active, input:active, select:active {
 #drinksContainer {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  grid-gap: 65px;
-  padding: 15px;
   justify-items: center;
-  /* margin-top: 15px; */
 }
 
 .drinks {
@@ -398,42 +377,34 @@ button:active, input:active, select:active {
   grid-template-columns: 1fr 1fr;
   height: 10vh;
   width: auto;
-  box-shadow: 0px 0px 10px rgba(0, 124, 219, 0.199);
-  /* background: rgba(0, 124, 219, 0.13); */
-  /* border: 1px solid black; */
-  padding: 15px;
   height: 100%;
   overflow: scroll;
   border-radius: 20px;
-  background: white;
   margin-bottom: 30px;
 }
 
 .drink {
-  /* border: 1px solid black; */
   box-shadow: 0px 0px 10px rgba(0, 124, 219, 0.199);
   border-radius: 20px;
   margin: 15px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* justify-items: center; */
   align-items: center;
   height: 18vw;
   width: 18vw;
   position: relative;
   cursor: pointer;
+  background: white;
 }
 
 .drink h4 {
-  /* max-width: 15vw; */
   text-align: center;
   color: rgb(0, 124, 219);
   padding: 10px;
 }
 
 .btn-pressed {
-  /* background: rgba(0, 124, 219, 0.315); */
   background: rgba(186, 35, 40, 0.13);
   height: 100%;
   width: 100%;
@@ -503,6 +474,22 @@ button:active, input:active, select:active {
   white-space: pre-wrap;
 }
 
+@media screen and (max-width: 1100px) {
+  .drink {
+    height: 20vw;
+    width: 20vw;
+  }
+  .drink h4 {
+    font-size: 14px;
+  }
+  .drinks {
+    grid-gap: 0px;
+  }
+  #drinksContainer {
+    grid-gap: 30px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   #drinksContainer {
     grid-template-columns: 1fr;
@@ -516,7 +503,6 @@ button:active, input:active, select:active {
     height: 19vw;
   }
   .drink h4 {
-    /* max-width: 20vw; */
     font-size: 12px;
   }
 }
@@ -529,13 +515,10 @@ button:active, input:active, select:active {
   grid-template-columns: 2fr 1fr;
   grid-gap: 105px;
   padding: 15px;
-  /* margin-top: 15px; */
   position: relative;
 }
 
 .errorBox {
-  /* box-shadow: 0px 0px 10px rgba(0, 124, 219, 0.486);
-  border-radius: 20px; */
   padding: 23vh 0vw 55vh;
   margin-left: -12vw;
   margin-top: -35px;
@@ -551,13 +534,11 @@ button:active, input:active, select:active {
 }
 
 .dish {
-  /* border: solid 1px black; */
   box-shadow: 0px 0px 10px rgba(0, 124, 219, 0.199);
   border-radius: 20px;
   padding: 25px;
   display: grid;
   justify-items: center;
-  /* max-height: 82vh; */
   overflow: scroll;
   background: white;
   margin-bottom: 25px;
@@ -566,7 +547,6 @@ button:active, input:active, select:active {
 .dish div {
   display: grid;
   justify-items: center;
-  /* max-width: 40vw; */
 }
 
 .line {
@@ -579,10 +559,8 @@ button:active, input:active, select:active {
 }
 
 #nextBox {
-  /* border: solid 1px black; */
   background: rgba(0, 124, 219, 0.13);
   padding: 25px;
-  /* height: 30vh; */
   border-radius: 20px;
   position: fixed;
   top: 135px;
@@ -606,9 +584,6 @@ button:active, input:active, select:active {
 @media screen and(max-width: 1024px) {
   .errorBox a {
     width: 30%;
-  }
-  #dishesContainer {
-  /* grid-gap: 60px; */
   }
   #nextBox .button {
     width: 25vw !important;
@@ -646,8 +621,6 @@ button:active, input:active, select:active {
   padding: 35px;
   position: relative;
   margin-top: 15px;
-  /* height: 60vh; */
-  /* margin-top: 115px; */
   background: white;
   margin: 16px 10vw 30px;
 }
@@ -691,11 +664,6 @@ select {
   width: 100%;
 }
 
-/* #timeSelect div {
-  display: flex;
-  flex-direction: column;
-} */
-
 .errorBoxMargin {
   position: relative;
   padding: 5px 0 25px 5px;
@@ -717,12 +685,10 @@ select {
   grid-template-columns: 1fr;
   grid-gap: 15px;
   justify-items: center;
-  /* align-items: center; */
 }
 
 #emailWrapper {
   display: grid;
-  /* flex-direction: column; */
   grid-template-columns: 1fr 1fr;
   width: 100%;
   grid-column-gap: 0px;
@@ -737,9 +703,7 @@ select {
 
 #amount {
   display: flex;
-  /* margin: 15px 0 10px 0; */
   width: 100%;
-  /* justify-content: space-between; */
 }
 
 #amount input {

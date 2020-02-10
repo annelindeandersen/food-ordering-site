@@ -20,14 +20,14 @@ function Order({newOrder, setNewOrder, month, setMonth, day, setDay, year, setYe
     for (let i = 1; i < daysInMonth +1; i++) {
         const date = moment(`${year}-${month.value}-${i}`).weekday()
         const dateText = moment.weekdays(date)
-        dayRows.push(<option value={i} disabled={date === 6 || date === 0}>{i} - {(dateText)}</option>)
+        dayRows.push(<option key={i} value={i} disabled={date === 6 || date === 0}>{i} - {(dateText)}</option>)
     }
 
     let yearRows = []
     let startYear = currentYear
     const endYear = currentYear + 4
     for (startYear; startYear <= endYear; startYear++) {
-        yearRows.push(<option value={startYear}>{startYear}</option>)
+        yearRows.push(<option key={startYear} value={startYear}>{startYear}</option>)
     }
 
     const addPeople = () => {
@@ -200,7 +200,7 @@ function Order({newOrder, setNewOrder, month, setMonth, day, setDay, year, setYe
                                 setNewOrder(true)
                             }}>
                                 {monthsInYear.map((month) => (
-                                    <option value={month} disabled={moment().months(month).format('M') < currentMonth && year === currentYear}>{month}</option>
+                                    <option key={month} value={month} disabled={moment().months(month).format('M') < currentMonth && year === currentYear}>{month}</option>
                                 ))}
                             </select>
                             <select value={day} id="day" onChange={(event) => {

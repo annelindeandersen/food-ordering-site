@@ -64,7 +64,7 @@ function App() {
         </div>
 
         <CSSTransition timeout={300} classNames={{appear: 'fade-appear', exit:'fade-exit'}}>
-        <Breadcrumbs selectedDrinkIds={selectedDrinkIds} saveEmail={saveEmail} saveDrinks={saveDrinks} />
+        <Breadcrumbs saveDish={saveDish} selectedDrinkIds={selectedDrinkIds} saveEmail={saveEmail} saveDrinks={saveDrinks} />
         </CSSTransition>
 
         <Route render={({location}) => (

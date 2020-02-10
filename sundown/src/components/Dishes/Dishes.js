@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {Link} from 'react-router-dom';
-import EmailValidator from 'email-validator';
 
 function Dishes({saveDish, setSaveDish, saveEmail}) {
-    const theSavedDish = saveDish
-    const [savedEmail, setSavedEmail] = useState(-1)
+    // const [savedEmail, setSavedEmail] = useState(-1)
     const [dish, setDish] = useState({
         meals: [
             {
@@ -30,9 +28,7 @@ function Dishes({saveDish, setSaveDish, saveEmail}) {
                     }
                 ]
             })
-            document.querySelector('.dishImg').style.display = 'none';
         } else if (localStorage.getItem(saveEmail) !== null) {
-            // if (localStorage.getItem(saveEmail) !== null) {
             setDish({
                 meals: [
                     {
@@ -42,7 +38,6 @@ function Dishes({saveDish, setSaveDish, saveEmail}) {
                     }
                 ]
             })
-            document.querySelector('.dishImg').style.display = 'none';
             console.log(dish, 'new'); 
         } else {
             getApi();
@@ -61,10 +56,10 @@ function Dishes({saveDish, setSaveDish, saveEmail}) {
         <div id="dishesContainer">
             <div className="dish">
                 {dish.meals.map((key, index) => (
-                    <div key={key.idMeal}>
-                        <img className="dishImg" src={key.strMealThumb} key={key.strMealThumb} alt="img"/>
-                        <h3 className="dishTitle" key={key.strMeal}>{key.strMeal}</h3>
-                        <p className="dishDesc" key={key.strInstructions}>{key.strInstructions}</p>
+                    <div key={index}>
+                        <img className="dishImg" src={key.strMealThumb} alt="img"/>
+                        <h3 className="dishTitle">{key.strMeal}</h3>
+                        <p className="dishDesc">{key.strInstructions}</p>
                     </div>
                 ))}
                 <button onClick={getApi} className="button">Generate new</button>

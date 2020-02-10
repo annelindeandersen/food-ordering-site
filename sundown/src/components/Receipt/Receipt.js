@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
-import moment from 'moment';
 
 function Receipt({saveDish, setSaveDish, saveDrinks, setSaveDrinks, saveDate, setSaveDate, saveAmount, setSaveAmount, saveEmail}) {
     const [order, setOrder] = useState([{
@@ -31,7 +30,6 @@ function Receipt({saveDish, setSaveDish, saveDrinks, setSaveDrinks, saveDate, se
                     <h2 className="blueFont">Your other info</h2><br/>
                     <p><b>Amount of people:</b> {saveAmount}</p>
                     <p><b>Date:</b> {saveDate}</p>
-                    {/* <p><b>Date:</b> {moment(saveDate).format('lll')}</p> */}
                     <p><b>Email:</b> {saveEmail}</p>
                 </div>
             </div>
