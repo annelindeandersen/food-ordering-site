@@ -51,6 +51,19 @@ function FindOrder({saveEmail, setSaveEmail}) {
                 <h3>Content box</h3><br/>
                 <p>Lorizzle ipsizzle dolizzle fizzle yippiyo, consectetuer adipiscing elizzle. Nullizzle sapien ma nizzle, sure volutpizzle, suscipit the bizzle, pimpin' dizzle, arcu. Pellentesque sizzle ass. Yo mamma erizzle. For sure we gonna chung crackalackin funky fresh turpizzle tempizzle doggy. Maurizzle pellentesque et turpizzle.<br/><br/> Vestibulum pizzle funky fresh. Pellentesque eleifend gangster . In own yo' mah nizzle platea dictumst. Brizzle dapibizzle. Crunk tellus urna, pretizzle eu, mattis ac, things vitae, nunc. My shizz suscipizzle. Integer sempizzle bow wow wow sed purus.</p>
             </div>
+            <div id="modalWrapper">
+                <div className="modalContent">
+                    <h2>Yay, we found your order! 🍺</h2>
+                    <div className="buttonWrapper">
+                        <Link to="/receipt">
+                            <button className="button">Show receipt</button>
+                        </Link>
+                        <Link to="/dishes">
+                            <button className="button">Update order</button>
+                        </Link>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

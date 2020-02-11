@@ -49,7 +49,7 @@ const Drinks = ({selectedDrinkIds, setSelectedDrinkIds, saveDrinks, setSaveDrink
                 drinksArr.push(key.name);
             }
             setSelectedDrinkIds(drinksArr);
-            console.log(selectedDrinkIds)
+            console.log(drinksArr)
         }
     }
 
