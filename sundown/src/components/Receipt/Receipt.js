@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {Link} from 'react-router-dom';
+import {useLocation} from 'react-router';
 
 function Receipt({saveDish, setSaveDish, saveDrinks, setSaveDrinks, saveDate, setSaveDate, saveAmount, setSaveAmount, saveEmail}) {
+    const [receiptRoll, setReceiptRoll] = useState('receiptHide');
     const [order, setOrder] = useState([{
             dish: saveDish,
             drinks: saveDrinks,
@@ -9,14 +11,32 @@ function Receipt({saveDish, setSaveDish, saveDrinks, setSaveDrinks, saveDate, se
             amount: saveAmount
     }])
     console.log(order);
+    let currentLocation = useLocation();
+
+    useEffect(() => {   
+        setTimeout(() => {
+            if (currentLocation.pathname === '/receipt') {
+                setReceiptRoll('receiptRoll');
+            } else {
+                setReceiptRoll('receiptHide');
+            }
+            setTimeout(() => {
+                receiptBounce()
+            }, 2480)
+        }, 500)     
+    }, [currentLocation])
 
     useEffect(() => {        
         localStorage.setItem(saveEmail, JSON.stringify(order))
     }, [saveEmail, order])
 
+    const receiptBounce = () => {
+        setReceiptRoll('receiptBounce')
+    }
+
     return (
         <div id="receiptContainer">
-            <div id="receiptBox">
+            <div id="receiptBox" className={receiptRoll}>
                 <h1>Receipt</h1><br/>
                 <div className="info">
                     <h2 className="blueFont">Your foods & drinks</h2><br/>

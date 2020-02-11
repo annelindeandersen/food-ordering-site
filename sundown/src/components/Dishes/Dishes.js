@@ -49,7 +49,7 @@ function Dishes({saveDish, setSaveDish, saveEmail}) {
         const body = await result.json();
         console.log(body);
         setDish(body);
-        setSaveDish(body.meals[0]);
+        // setSaveDish(body.meals[0]);
     }
 
     return(

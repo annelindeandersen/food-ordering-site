@@ -121,27 +121,70 @@ button:active, input:active, select:active {
 
 #breadcrumbContainer {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  top: 90px;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* top: 10px; */
+  left: 0;
   justify-items: center;
   align-items: center;
-  padding: 0 20vw;
+  /* padding: 0 0vw; */
   text-transform: uppercase;
   position: fixed;
   z-index: 10;
-  width: 80vw;
+  width: 100vw;
+}
+
+.step {
+  font-weight: bold;
+  background: rgba(186, 35, 40, 0.178);
+  padding: 5px 0;
+  /* border-radius: 20px; */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  color: white;
+  position: relative;
 }
 
 .activeStep {
-  font-weight: bold;
-  background: rgba(186, 35, 40, 0.048);
-  padding: 5px 10px;
-  border-radius: 20px;
+  /* background: rgba(186, 35, 40, 0.18); */
+  /* background: #BA2329; */
+  /* position: absolute; */
+  /* width: 100%; */
+  /* left: 0; top: 0; */
+}
+
+.step::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  transition: width .5s ease-in;
+  background: #BA2329;
+  z-index: -2;
+}
+
+.currentStep::before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 8px solid white;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  left: 40%;
+  margin-top: 1.5px;
+  position: absolute;
+}
+
+.activeStep::after {
+  width: 100%;
 }
 
 .inactive {
-  opacity: 0.3;
+  /* opacity: 0.3; */
   font-style: italic;
+  color: rgb(179, 179, 179);
 }
 
 #menuContainer {
@@ -156,11 +199,30 @@ button:active, input:active, select:active {
   color: white;
   background: linear-gradient(#007DDB, rgb(135, 187, 226));
   position: fixed;
-  top: 0;
+  top: -75px;
   left: 0;
   width: 100vw;
   z-index: 10;
   padding: 0 6vw;
+  text-decoration: none;
+}
+
+#menuContainer div::after {
+  content: '';
+  width: 0;
+  height: 2px;
+  background: black;
+  display: block;
+  transition: width 0.3s linear;
+}
+
+#menuContainer div:hover::after {
+  width: 100%;
+}
+
+#menuContainer div:hover {
+  transform: scale(1.2);
+  color: black;
 }
 
 #menuContainer h2 {
@@ -171,6 +233,35 @@ button:active, input:active, select:active {
   height: 60px;
 }
 
+#logo:hover {
+  animation: swirl .5s linear forwards;
+  transform: rotate(540deg);
+}
+
+@keyframes swirl {
+  0% {
+    transform: rotate(0deg);
+  }
+  15% {
+    transform: rotate(90deg);
+  }
+  30% {
+    transform: rotate(180deg);
+  }
+  45% {
+    transform: rotate(270deg);
+  }
+  60% {
+    transform: rotate(360deg);
+  }
+  75% {
+    transform: rotate(450deg);
+  }
+  100% {
+    transform: rotate(540deg);
+  }
+}
+
 #sliderContainer {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -178,7 +269,7 @@ button:active, input:active, select:active {
   justify-items: center;
   height: 40vh;
   margin: 15px;
-  margin-top: -20px;
+  margin-top: 55px;
 }
 
 #slider {
@@ -563,7 +654,7 @@ button:active, input:active, select:active {
   padding: 25px;
   border-radius: 20px;
   position: fixed;
-  top: 135px;
+  top: 60px;
   right: 10vw;
 }
 
@@ -770,10 +861,12 @@ select {
 /*********  RECEIPT  **********/
 
 #receiptContainer {
-  padding: 15px;
-  margin-top: 0px;
+  padding: 30px 15px;
+  margin-top: 55px;
   display: grid;
   justify-items: center;
+  position: relative;
+  overflow: hidden;
 }
 
 #receiptBox {
@@ -784,6 +877,28 @@ select {
   width: 50vw;
   min-height: 40vh;
   margin-top: 0px;
+  transform: translate(0px, 0px);
+  animation: none;
+  transition: transform 2.5s ease-in;
+}
+
+#receiptBox.receiptHide {
+  transform: translate(0px, -590px);
+  /* transition: transform 4s linear; */
+}
+
+#receiptBox.receiptRoll {
+  transform: translate(0px, 0px);
+}
+
+#receiptBox.receiptBounce {
+  animation: bounce 2s forwards;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+	40% {transform: translateY(-25px);}
+	60% {transform: translateY(-15px);}
 }
 
 .receiptDrink, #dishWrap {
@@ -808,7 +923,7 @@ select {
 }
 
 #receiptContainer button {
-  margin-top: 30px;
+  margin-top: 45px;
 }
 
 @media screen and (max-width: 950px) {
@@ -839,7 +954,8 @@ select {
   border-radius: 20px;
   box-shadow: 0px 0px 10px rgba(0, 124, 219, 0.199);
   text-align: center;
-  transition: opacity 500ms linear;
+  opacity: 1;
+  transition: opacity 1s ease-in;
 }
 
 .buttonWrapper {
@@ -880,7 +996,23 @@ select {
 
 .page {
   position: absolute;
-  top: 120px;
+  top: 45px;
   left: 0;
   right: 0;
+}
+
+#menuContainer {
+  /* content: ""; */
+  transform: translate(0px, -75px);
+  transition: transform 0.4s linear;
+}
+
+#menuContainer.menuRoll {
+  /* content: ""; */
+  transform: translate(0px, 75px);
+}
+
+#menuContainer.menuStay {
+  /* top: 0 !important; */
+  transform: translate(0px, 75px);
 }

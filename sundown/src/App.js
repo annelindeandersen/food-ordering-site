@@ -10,7 +10,7 @@ import {
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
 // ********* Components
-// import Menu from './components/Menu/Menu';
+import Menu from './components/Menu/Menu';
 import Slider from './components/Home/Slider';
 import FindOrder from './components/Home/FindOrder';
 import Dishes from './components/Dishes/Dishes';
@@ -52,20 +52,12 @@ function App() {
     <div className="App">
       <Router>
 
-        <div id="menuContainer">
-            <Link to='/'>
-              <img id="logo" src="./img/beach.png" alt="logo"/>
-            </Link>
-            <div>Restauranter</div>
-            <div>Produkter</div>
-            <div>Nyhedsbrev</div>
-            <div>Kontakt</div>
-            <h2>MENU</h2>
-        </div>
+        <Menu />
 
-        <CSSTransition timeout={300} classNames={{appear: 'fade-appear', exit:'fade-exit'}}>
+        {/* <CSSTransition timeout={300} classNames={{appear: 'fade-appear', exit:'fade-exit'}}> */}
         <Breadcrumbs saveDish={saveDish} selectedDrinkIds={selectedDrinkIds} saveEmail={saveEmail} saveDrinks={saveDrinks} />
-        </CSSTransition>
+        {/* </CSSTransition> */}
+
 
         <Route render={({location}) => (
 
@@ -107,7 +99,8 @@ function App() {
                 ? 
                 <Redirect to="/dishes"/> 
                 : 
-                <Receipt saveDish={saveDish} setSaveDish={setSaveDish} saveDrinks={saveDrinks} setSaveDrinks={setSaveDrinks} saveDate={saveDate} setSaveDate={setSaveDate} saveAmount={saveAmount} setSaveAmount={setSaveAmount} saveEmail={saveEmail} />}
+                <Receipt saveDish={saveDish} setSaveDish={setSaveDish} saveDrinks={saveDrinks} setSaveDrinks={setSaveDrinks} saveDate={saveDate} setSaveDate={setSaveDate} saveAmount={saveAmount} setSaveAmount={setSaveAmount} saveEmail={saveEmail} />
+                }
               </div>
               </Route>
             </Switch>

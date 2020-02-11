@@ -1,9 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import {useLocation} from 'react-router';
+import {Link} from 'react-router-dom';
+import classNames from 'classnames';
 
 function Menu() {
+
+    const [loadClass, setLoadClass] = useState('none');
+    let currentLocation = useLocation();
+    console.log(currentLocation);
+
+    useEffect(() => {
+        if (currentLocation.pathname === '/receipt') {
+            setLoadClass('none');
+            setTimeout(() => {
+                setLoadClass('menuRoll');
+                console.log(loadClass);
+            }, 100);
+        } else if (currentLocation.pathname === '/') {
+            setLoadClass('menuStay');
+        }
+    },[currentLocation])
+
+    if (currentLocation.pathname !== '/' && currentLocation.pathname !== '/receipt') {
+        return null;
+    }
+
     return(
-        <div id="menuContainer">
-            <img id="logo" src="./img/beach.png" alt="logo"/>
+        // 'menuRoll': currentLocation.pathname === '/receipt', 
+        <div id="menuContainer" className={loadClass}>
+            <Link to='/'>
+                <img id="logo" src="./img/beach.png" alt="logo"/>
+            </Link>
             <div>Restauranter</div>
             <div>Produkter</div>
             <div>Nyhedsbrev</div>
