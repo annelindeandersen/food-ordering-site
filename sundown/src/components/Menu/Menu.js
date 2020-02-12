@@ -4,7 +4,10 @@ import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 
 function Menu() {
-
+    const addDegrees = 540;
+    let [currentDegree, setCurrentDegree] = useState(0);
+    const logo = document.getElementById('logo');
+    const [mouseOver, setMouseOver] = useState(false)
     const [loadClass, setLoadClass] = useState('none');
     let currentLocation = useLocation();
     console.log(currentLocation);
@@ -26,10 +29,9 @@ function Menu() {
     }
 
     return(
-        // 'menuRoll': currentLocation.pathname === '/receipt', 
         <div id="menuContainer" className={loadClass}>
-            <Link to='/'>
-                <img id="logo" src="./img/beach.png" alt="logo"/>
+            <Link to='/' >
+                <img id="logo" style={{transform: `rotate(${currentDegree}deg)`}} onMouseOver={() => {setCurrentDegree(currentDegree += addDegrees)}} src="./img/beach.png" alt="logo"/>
             </Link>
             <div>Restauranter</div>
             <div>Produkter</div>

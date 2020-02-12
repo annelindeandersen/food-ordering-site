@@ -66,13 +66,13 @@ function App() {
             <Switch location={location}>
               <Route exact path="/" >
                 <div className="page">
-                <Slider saveDish={saveDish} setSaveDish={setSaveDish} saveDrinks={saveDrinks} setSaveDrinks={setSaveDrinks} saveDate={saveDate} setSaveDate={setSaveDate} saveAmount={saveAmount} setSaveAmount={setSaveAmount} saveEmail={saveEmail}/>
-                <FindOrder saveEmail={saveEmail} setSaveEmail={setSaveEmail} />
+                <Slider setSaveEmail={setSaveEmail} saveDish={saveDish} setSaveDish={setSaveDish} saveDrinks={saveDrinks} setSaveDrinks={setSaveDrinks} saveDate={saveDate} setSaveDate={setSaveDate} saveAmount={saveAmount} setSaveAmount={setSaveAmount} saveEmail={saveEmail}/>
+                <FindOrder setSaveDrinks={setSaveDrinks} setSaveDate={setSaveDate} setSaveAmount={setSaveAmount} setSaveDish={setSaveDish} saveEmail={saveEmail} setSaveEmail={setSaveEmail} />
                 </div>
               </Route>
               <Route path="/dishes" >
                 <div className="page">
-                <Dishes saveDish={saveDish} setSaveDish={setSaveDish} saveEmail={saveEmail} />
+                <Dishes saveDish={saveDish} setSaveDish={setSaveDish} setSaveEmail={setSaveEmail} saveEmail={saveEmail} />
                 </div>
               </Route>
               <Route path="/drinks">

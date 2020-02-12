@@ -16,7 +16,7 @@ function Breadcrumbs({history, saveEmail, saveDrinks, saveDish, selectedDrinkIds
     return(
         <div id="breadcrumbContainer">
             <Link id='dishesStep' className={classNames({'activeStep': saveDish || currentLocation.pathname === '/dishes', 'currentStep': currentLocation.pathname === '/dishes'}, 'step')} to='/dishes'>Dishes</Link>
-            <Link id='drinksStep' className={classNames({'activeStep': saveDish || currentLocation.pathname === '/drinks', 'currentStep': currentLocation.pathname === '/drinks', 'inactive': saveDish.length <= 0}, 'step')} to='/drinks'>Drinks</Link>
+            <Link id='drinksStep' className={classNames({'activeStep': saveDrinks.length > 0 || currentLocation.pathname === '/drinks', 'currentStep': currentLocation.pathname === '/drinks', 'inactive': saveDish.length <= 0}, 'step')} to='/drinks'>Drinks</Link>
             <Link id='orderStep' className={classNames({'activeStep': saveDrinks.length > 0 || currentLocation.pathname === '/order', 'currentStep': currentLocation.pathname === '/order', 'inactive': saveDrinks.length <= 0}, 'step')} to='/order' onClick={(e) => saveDrinks ? true : e.preventDefault() }>Order</Link>
             {/* <Link id='receiptStep' className={classNames({'activeStep': currentLocation.pathname === '/receipt', 'inactive': !saveEmail})} to='/receipt' onClick={(e) => saveEmail ? true : e.preventDefault() }>Receipt</Link> */}
         </div>

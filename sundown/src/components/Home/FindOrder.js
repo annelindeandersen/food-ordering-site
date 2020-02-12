@@ -3,24 +3,32 @@ import {Link} from 'react-router-dom';
 import classNames from 'classnames';
 import EmailValidator from 'email-validator';
 
-function FindOrder({saveEmail, setSaveEmail}) {
+function FindOrder({saveEmail, setSaveEmail, setSaveDish, setSaveDrinks, setSaveDate, setSaveAmount}) {
     const [message, setMessage] = useState('');
     const [storedData, setStoredData] = useState('');
     const [modal, setModal] = useState(false);
+    const [email, setEmail] = useState('');
 
     console.log(EmailValidator.validate(saveEmail))
 
     useEffect(() => {
         const getData = localStorage.getItem(saveEmail);
         setStoredData(getData);
+        const dataParse = JSON.parse(getData);
         console.log(JSON.parse(getData))
-        if (getData === null) {
-            console.log(getData)
+        if (getData !== null) {
+            if (EmailValidator.validate(saveEmail) === true) {
+                setSaveAmount(dataParse[0].amount);
+                setSaveDrinks(dataParse[0].drinks);
+                setSaveDate(dataParse[0].date);
+                setSaveDish(dataParse[0].dish);
+            }
         }
 
         if (saveEmail.length !== 0) {
             setMessage('');
         }
+
     }, [saveEmail])
 
     const findOrder = () => {
@@ -60,7 +68,7 @@ function FindOrder({saveEmail, setSaveEmail}) {
                         <Link to="/receipt">
                             <button className="button">Show receipt</button>
                         </Link>
-                        <Link to="/dishes">
+                        <Link to={{pathname: "/dishes", state: { saveEmail }}}>
                             <button className="button">Update order</button>
                         </Link>
                     </div>

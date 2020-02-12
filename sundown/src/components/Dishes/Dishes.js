@@ -17,8 +17,10 @@ function Dishes({saveDish, setSaveDish, saveEmail}) {
         const savedDish = localStorage.getItem(saveEmail);
         console.log(saveEmail)
         const savedDishArr = JSON.parse(savedDish);
+        console.log(savedDishArr, saveDish)
 
-        if (saveDish) {
+        if (saveDish !== '') {
+            console.log('1')
             setDish({
                 meals: [
                     {
@@ -28,7 +30,8 @@ function Dishes({saveDish, setSaveDish, saveEmail}) {
                     }
                 ]
             })
-        } else if (localStorage.getItem(saveEmail) !== null) {
+        } else if (savedDishArr !== null) {
+            console.log('2', saveEmail)
             setDish({
                 meals: [
                     {
@@ -38,8 +41,8 @@ function Dishes({saveDish, setSaveDish, saveEmail}) {
                     }
                 ]
             })
-            console.log(dish, 'new'); 
         } else {
+            console.log('3')
             getApi();
         }
     }, [saveEmail])
@@ -52,6 +55,14 @@ function Dishes({saveDish, setSaveDish, saveEmail}) {
         // setSaveDish(body.meals[0]);
     }
 
+    const generateNew = async () => {
+        const result = await fetch('https://www.themealdb.com/api/json/v1/1/random.php');
+        const body = await result.json();
+        console.log(body);
+        setDish(body);
+        setSaveDish(body.meals[0]);
+    }
+
     return(
         <div id="dishesContainer">
             <div className="dish">
@@ -62,7 +73,7 @@ function Dishes({saveDish, setSaveDish, saveEmail}) {
                         <p className="dishDesc">{key.strInstructions}</p>
                     </div>
                 ))}
-                <button onClick={getApi} className="button">Generate new</button>
+                <button onClick={generateNew} className="button">Generate new</button>
             </div>
             <div id="nextBox">
                 <h3>Pick drinks next</h3>

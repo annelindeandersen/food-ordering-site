@@ -80,6 +80,7 @@ const Drinks = ({selectedDrinkIds, setSelectedDrinkIds, saveDrinks, setSaveDrink
                 <h3>Pick date and amount next</h3>
                 <div className="line"></div><br/>
                 <i>Your current drinks choice:</i>
+                <div id="drinksSelected">
                 {selectedDrinks.map((key) => (
                     <div className="selectedDrink" key={key.name}>
                         <div>
@@ -89,6 +90,7 @@ const Drinks = ({selectedDrinkIds, setSelectedDrinkIds, saveDrinks, setSaveDrink
                         <div className="unSelect" onClick={() => toggleDrink({key})}>X</div>
                     </div>
                 ))}
+                </div>
                 <br/>
                 {selectedDrinkIds.length > 0 ?
                 <Link to='/order'>
