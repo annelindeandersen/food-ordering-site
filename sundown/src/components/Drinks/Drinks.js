@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import classNames from 'classnames';
 
-const Drinks = ({selectedDrinkIds, setSelectedDrinkIds, saveDrinks, setSaveDrinks, saveEmail}) => {
+const Drinks = ({setExit, setEnter, enter, exit, selectedDrinkIds, setSelectedDrinkIds, saveDrinks, setSaveDrinks, saveEmail}) => {
+    const location = useLocation();
+    console.log(location);
+    console.log(exit);
+    const [loadClass, setLoadClass] = useState('')
     const [message, setMessage] = useState('');
     const [drinks, setDrinks] = useState([
             {
@@ -10,6 +14,22 @@ const Drinks = ({selectedDrinkIds, setSelectedDrinkIds, saveDrinks, setSaveDrink
                 image_url: ''
             }
         ]);
+
+    
+    useEffect(() => {
+        console.log(exit);
+    }, [exit])
+
+    useEffect(() => {
+        if (location.pathname === '/drinks') {
+            setExit(true)
+            setTimeout(() => {
+                setLoadClass('drinkMoveIn');
+            }, 150)
+        } else {
+            setExit(undefined);
+        }
+    }, [location])
 
     useEffect(() => {
         const savedDrinks = localStorage.getItem(saveEmail, saveDrinks);
@@ -30,7 +50,7 @@ const Drinks = ({selectedDrinkIds, setSelectedDrinkIds, saveDrinks, setSaveDrink
         const getApi = async () => {
             const result = await fetch('https://api.punkapi.com/v2/beers');
             const body = await result.json();
-            console.log(body);
+            // console.log(body);
             setDrinks(body);
         }
         getApi();
@@ -69,7 +89,7 @@ const Drinks = ({selectedDrinkIds, setSelectedDrinkIds, saveDrinks, setSaveDrink
         <div id="drinksContainer">
             <div className="drinks">
                 {drinks.map((key, index) => (
-                    <div onClick={() => toggleDrink({key})} className='drink'  key={index}>
+                    <div onClick={() => toggleDrink({key})} className={classNames({[loadClass]: exit === true, 'drinkMoveOut': exit === undefined},'drink')}  key={index}>
                         <div className={classNames({'btn-pressed': selectedDrinkIds.indexOf(key.name) >= 0})}></div>
                         <img className="drinkImg" src={key.image_url} alt="img"/>
                         <h4 className="drinkTitle" >{key.name}</h4>

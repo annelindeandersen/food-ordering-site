@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
+import classNames from 'classnames';
 
-function Dishes({saveDish, setSaveDish, saveEmail}) {
-    // const [savedEmail, setSavedEmail] = useState(-1)
+function Dishes({setExit, setEnter, enter, exit, saveDish, setSaveDish, saveEmail}) {
+    const history = useHistory();
+    console.log(history)
+    console.log(exit)
     const [dish, setDish] = useState({
         meals: [
             {
@@ -12,6 +15,15 @@ function Dishes({saveDish, setSaveDish, saveEmail}) {
             }
         ]
     });
+
+    useEffect(() => {
+        setExit('')
+        if (history.location.pathname === '/dishes') {
+            setTimeout(() => {
+                setExit(false); 
+            }, 150)
+        }
+    }, [history])
 
     useEffect(() => {
         const savedDish = localStorage.getItem(saveEmail);
@@ -63,9 +75,17 @@ function Dishes({saveDish, setSaveDish, saveEmail}) {
         setSaveDish(body.meals[0]);
     }
 
+    const saveAndExit = async () => {
+        setSaveDish(dish.meals[0]);
+        await setExit(true);
+        setTimeout(() => {
+            history.push('/drinks', { exit });
+        }, 350);
+    }
+
     return(
         <div id="dishesContainer">
-            <div className="dish">
+            <div className={classNames({'dishMoveOut': exit === true, 'dishMoveIn': exit === false},"dish")}>
                 {dish.meals.map((key, index) => (
                     <div key={index}>
                         <img className="dishImg" src={key.strMealThumb} alt="img"/>
@@ -80,9 +100,9 @@ function Dishes({saveDish, setSaveDish, saveEmail}) {
                 <div className="line"></div>
                 <br/>
                 <i>Your current dish choice:</i><p><b>{dish.meals[0].strMeal}</b></p><br/>
-                <Link to="/drinks">
-                    <button onClick={() => setSaveDish(dish.meals[0])} className="button">Next</button>
-                </Link>
+                {/* <Link to="/drinks"> */}
+                <button onClick={saveAndExit} className="button">Next</button>
+                {/* </Link> */}
             </div>
         </div>
     )

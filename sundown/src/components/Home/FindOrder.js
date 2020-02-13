@@ -47,6 +47,7 @@ function FindOrder({saveEmail, setSaveEmail, setSaveDish, setSaveDrinks, setSave
     }
 
     return(
+        <>
         <div id="findOrderContainer">
             <div id="findOrder">
                 <h3>Find your order</h3>
@@ -61,9 +62,11 @@ function FindOrder({saveEmail, setSaveEmail, setSaveDish, setSaveDrinks, setSave
                 <h3>Content box</h3><br/>
                 <p>Lorizzle ipsizzle dolizzle fizzle yippiyo, consectetuer adipiscing elizzle. Nullizzle sapien ma nizzle, sure volutpizzle, suscipit the bizzle, pimpin' dizzle, arcu. Pellentesque sizzle ass. Yo mamma erizzle. For sure we gonna chung crackalackin funky fresh turpizzle tempizzle doggy. Maurizzle pellentesque et turpizzle.<br/><br/> Vestibulum pizzle funky fresh. Pellentesque eleifend gangster . In own yo' mah nizzle platea dictumst. Brizzle dapibizzle. Crunk tellus urna, pretizzle eu, mattis ac, things vitae, nunc. My shizz suscipizzle. Integer sempizzle bow wow wow sed purus.</p>
             </div>
-            <div id="modalWrapper" className={classNames({"visible": modal === true, "hidden": modal === false})}>
+        </div>
+        <div id="modalWrapper" className={classNames({"visible": modal === true, "hidden": modal === false})}>
                 <div className="modalContent" >
-                    <h2>Yay, we found your order! 🍺</h2>
+                    <h3 onClick={() => setModal(false)}>X</h3>
+                    <h2>Yay, we found your order! 🍺</h2><br/>
                     <div className="buttonWrapper">
                         <Link to="/receipt">
                             <button className="button">Show receipt</button>
@@ -72,11 +75,9 @@ function FindOrder({saveEmail, setSaveEmail, setSaveDish, setSaveDrinks, setSave
                             <button className="button">Update order</button>
                         </Link>
                     </div>
-                    <br/>
-                    <h3 onClick={() => setModal(false)}>CLOSE</h3>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 

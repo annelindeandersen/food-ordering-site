@@ -4,7 +4,7 @@ import Flickity from 'flickity';
 import {useHistory} from 'react-router-dom';
 import EmailValidator from 'email-validator';
  
-function Slider({ setSaveEmail, saveDish, setSaveDish, saveDrinks, setSaveDrinks, saveDate, setSaveDate, saveAmount, setSaveAmount, saveEmail}) {
+function Slider({ setSelectedDrinkIds, setSaveEmail, saveDish, setSaveDish, saveDrinks, setSaveDrinks, saveDate, setSaveDate, saveAmount, setSaveAmount, saveEmail}) {
 
     useEffect(() => {
         // const getData = localStorage.getItem(saveEmail);
@@ -37,6 +37,7 @@ function Slider({ setSaveEmail, saveDish, setSaveDish, saveDrinks, setSaveDrinks
         setSaveDrinks('');
         setSaveDate('');
         setSaveDish('');
+        setSelectedDrinkIds([]);
 
         return history.push('/dishes');
     };

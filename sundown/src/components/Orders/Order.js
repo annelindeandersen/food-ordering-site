@@ -8,6 +8,9 @@ import classNames from 'classnames';
 function Order({newOrder, setNewOrder, month, setMonth, day, setDay, year, setYear, amount, setAmount, time, setTime, email, setEmail, saveAmount, setSaveAmount, saveEmail, setSaveEmail, saveDate, setSaveDate, saveDish, saveDrinks}) {
     const currentMonth = (new Date()).getMonth() + 1
     const currentYear = moment().year();
+    const currentDay = moment()._d;
+    const currentStamp = moment(currentDay).unix();
+    console.log(currentDay, currentStamp)
     const [dateSelected, setDateSelected] = useState('')
     const [orderButton, setOrderButton] = useState('Order');
     const [errorEmail, setErrorEmail] = useState('');
@@ -20,7 +23,7 @@ function Order({newOrder, setNewOrder, month, setMonth, day, setDay, year, setYe
     for (let i = 1; i < daysInMonth +1; i++) {
         const date = moment(`${year}-${month.value}-${i}`).weekday()
         const dateText = moment.weekdays(date)
-        dayRows.push(<option key={i} value={i} disabled={date === 6 || date === 0}>{i} - {(dateText)}</option>)
+        dayRows.push(<option key={i} value={i} disabled={date === 6 || date === 0 || moment(dateSelected).isBefore(currentDay)}>{i} - {(dateText)}</option>)
     }
 
     let yearRows = []
@@ -148,6 +151,10 @@ function Order({newOrder, setNewOrder, month, setMonth, day, setDay, year, setYe
         // console.log(dateSelected);
     }, [month, day, time, year])
 
+    if (moment(dateSelected).unix() < currentStamp) {
+        console.log('LESS THAN CURRENT.....')
+    }
+
     const amountOnChange = (event) => {
         setNewOrder(true)
         let amountValue = parseInt(event.target.value)
@@ -170,6 +177,8 @@ function Order({newOrder, setNewOrder, month, setMonth, day, setDay, year, setYe
         const validatedEmail = EmailValidator.validate(email);
         if (dateSelected.indexOf('Saturday') !== -1 || dateSelected.indexOf('Sunday') !== -1 ) {
             setErrorEmail('You cannot book Sunday and Saturday!')
+        } else if (moment(dateSelected).unix() < currentStamp) {
+            setErrorEmail('Sorry, date is in the past....')
         } else if (amount > 10 || amount < 1) {
             setErrorAmount('Sorry, amount has to be between 1 and 10')
         } else if (validatedEmail === true && saveDish.length !== 0 && saveDrinks.length !== 0) {
@@ -260,7 +269,7 @@ function Order({newOrder, setNewOrder, month, setMonth, day, setDay, year, setYe
                             setNewOrder(true)
                             }} />
                         {
-                            EmailValidator.validate(email) === true && saveDish.length !== 0 && saveDrinks.length !== 0 && amount <= 10 && amount >= 1 && dateSelected.indexOf('Saturday') === -1 && dateSelected.indexOf('Sunday') === -1 ?
+                            EmailValidator.validate(email) === true && saveDish.length !== 0 && saveDrinks.length !== 0 && amount <= 10 && amount >= 1 && dateSelected.indexOf('Saturday') === -1 && dateSelected.indexOf('Sunday') === -1 && moment(dateSelected).unix() > currentStamp ?
                             <Link to='/receipt'>
                             <button onClick={saveOrder} className="button">{orderButton}</button>
                             </Link>

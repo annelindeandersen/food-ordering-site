@@ -5,7 +5,8 @@ import {
   Switch,
   Redirect,
   Route,
-  Link
+  Link,
+  useLocation
 } from "react-router-dom";
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
@@ -37,6 +38,8 @@ function App() {
   const [time, setTime] = useState('');
   const [email, setEmail] = useState('');
   const [newOrder, setNewOrder] = useState(false);
+  const [exit, setExit] = useState('');
+  const [enter, setEnter] = useState(false);
 
   useEffect(() => {
     console.log({ 'dish': saveDish});
@@ -55,7 +58,7 @@ function App() {
         <Menu />
 
         {/* <CSSTransition timeout={300} classNames={{appear: 'fade-appear', exit:'fade-exit'}}> */}
-        <Breadcrumbs saveDish={saveDish} selectedDrinkIds={selectedDrinkIds} saveEmail={saveEmail} saveDrinks={saveDrinks} />
+        <Breadcrumbs setExit={setExit} saveDish={saveDish} selectedDrinkIds={selectedDrinkIds} saveEmail={saveEmail} saveDrinks={saveDrinks} />
         {/* </CSSTransition> */}
 
 
@@ -66,13 +69,13 @@ function App() {
             <Switch location={location}>
               <Route exact path="/" >
                 <div className="page">
-                <Slider setSaveEmail={setSaveEmail} saveDish={saveDish} setSaveDish={setSaveDish} saveDrinks={saveDrinks} setSaveDrinks={setSaveDrinks} saveDate={saveDate} setSaveDate={setSaveDate} saveAmount={saveAmount} setSaveAmount={setSaveAmount} saveEmail={saveEmail}/>
+                <Slider setSelectedDrinkIds={setSelectedDrinkIds} setSaveEmail={setSaveEmail} saveDish={saveDish} setSaveDish={setSaveDish} saveDrinks={saveDrinks} setSaveDrinks={setSaveDrinks} saveDate={saveDate} setSaveDate={setSaveDate} saveAmount={saveAmount} setSaveAmount={setSaveAmount} saveEmail={saveEmail}/>
                 <FindOrder setSaveDrinks={setSaveDrinks} setSaveDate={setSaveDate} setSaveAmount={setSaveAmount} setSaveDish={setSaveDish} saveEmail={saveEmail} setSaveEmail={setSaveEmail} />
                 </div>
               </Route>
               <Route path="/dishes" >
                 <div className="page">
-                <Dishes saveDish={saveDish} setSaveDish={setSaveDish} setSaveEmail={setSaveEmail} saveEmail={saveEmail} />
+                <Dishes setExit={setExit} setEnter={setEnter} exit={exit} enter={enter} saveDish={saveDish} setSaveDish={setSaveDish} setSaveEmail={setSaveEmail} saveEmail={saveEmail} />
                 </div>
               </Route>
               <Route path="/drinks">
@@ -81,7 +84,7 @@ function App() {
                 ? 
                 <Redirect to="/dishes"/> 
                 : 
-                <Drinks setSelectedDrinkIds={setSelectedDrinkIds} selectedDrinkIds={selectedDrinkIds} saveDrinks={saveDrinks} setSaveDrinks={setSaveDrinks} saveEmail={saveEmail} />}
+                <Drinks setExit={setExit} setEnter={setEnter} exit={exit} enter={enter} setSelectedDrinkIds={setSelectedDrinkIds} selectedDrinkIds={selectedDrinkIds} saveDrinks={saveDrinks} setSaveDrinks={setSaveDrinks} saveEmail={saveEmail} />}
                 </div>
               </Route>
               <Route path="/order">
