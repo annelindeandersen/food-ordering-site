@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import classNames from 'classnames';
 
 function Dishes({setExit, setEnter, enter, exit, saveDish, setSaveDish, saveEmail}) {
@@ -42,7 +42,8 @@ function Dishes({setExit, setEnter, enter, exit, saveDish, setSaveDish, saveEmai
                     }
                 ]
             })
-        } else if (savedDishArr !== null) {
+            // savedDishArr !== null
+        } else if (saveEmail) {
             console.log('2', saveEmail)
             setDish({
                 meals: [
@@ -100,9 +101,7 @@ function Dishes({setExit, setEnter, enter, exit, saveDish, setSaveDish, saveEmai
                 <div className="line"></div>
                 <br/>
                 <i>Your current dish choice:</i><p><b>{dish.meals[0].strMeal}</b></p><br/>
-                {/* <Link to="/drinks"> */}
                 <button onClick={saveAndExit} className="button">Next</button>
-                {/* </Link> */}
             </div>
         </div>
     )

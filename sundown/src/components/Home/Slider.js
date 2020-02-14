@@ -3,23 +3,12 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Flickity from 'flickity';
 import {useHistory} from 'react-router-dom';
 import EmailValidator from 'email-validator';
+import classNames from 'classnames';
  
-function Slider({ setSelectedDrinkIds, setSaveEmail, saveDish, setSaveDish, saveDrinks, setSaveDrinks, saveDate, setSaveDate, saveAmount, setSaveAmount, saveEmail}) {
+function Slider({ setNewOrder, modal, setModal, setSelectedDrinkIds, setSaveEmail, saveDish, setSaveDish, saveDrinks, setSaveDrinks, saveDate, setSaveDate, saveAmount, setSaveAmount, saveEmail}) {
 
     useEffect(() => {
-        // const getData = localStorage.getItem(saveEmail);
-        // const dataParse = JSON.parse(getData);
-        // console.log(dataParse);
-
-        // if(localStorage.getItem(saveEmail) !== null) {
-        //     if (EmailValidator.validate(saveEmail) === true) {
-        //         setSaveAmount(dataParse[0].amount);
-        //         setSaveDrinks(dataParse[0].drinks);
-        //         setSaveDate(dataParse[0].date);
-        //         setSaveDish(dataParse[0].dish);
-        //     }
-        // }
-
+        
         var flkty = new Flickity( '.main-carousel', {
             adaptiveHeight: true,
             autoPlay: 5000,
@@ -38,13 +27,14 @@ function Slider({ setSelectedDrinkIds, setSaveEmail, saveDish, setSaveDish, save
         setSaveDate('');
         setSaveDish('');
         setSelectedDrinkIds([]);
+        setNewOrder(false);
 
         return history.push('/dishes');
     };
 console.log(saveDrinks);
 
     return(
-        <div id="sliderContainer">
+        <div id="sliderContainer" className={classNames({"blur": modal === true, "noBlur": modal === false})}>
             <div id="slider">
                 <div className="main-carousel">
                     <div className="carousel-cell"><img src="./img/food1.jpg" alt="food" /></div>

@@ -40,6 +40,7 @@ function App() {
   const [newOrder, setNewOrder] = useState(false);
   const [exit, setExit] = useState('');
   const [enter, setEnter] = useState(false);
+  const [modal, setModal] = useState(false);
 
   useEffect(() => {
     console.log({ 'dish': saveDish});
@@ -69,8 +70,8 @@ function App() {
             <Switch location={location}>
               <Route exact path="/" >
                 <div className="page">
-                <Slider setSelectedDrinkIds={setSelectedDrinkIds} setSaveEmail={setSaveEmail} saveDish={saveDish} setSaveDish={setSaveDish} saveDrinks={saveDrinks} setSaveDrinks={setSaveDrinks} saveDate={saveDate} setSaveDate={setSaveDate} saveAmount={saveAmount} setSaveAmount={setSaveAmount} saveEmail={saveEmail}/>
-                <FindOrder setSaveDrinks={setSaveDrinks} setSaveDate={setSaveDate} setSaveAmount={setSaveAmount} setSaveDish={setSaveDish} saveEmail={saveEmail} setSaveEmail={setSaveEmail} />
+                <Slider setNewOrder={setNewOrder} modal={modal} setModal={setModal} setSelectedDrinkIds={setSelectedDrinkIds} setSaveEmail={setSaveEmail} saveDish={saveDish} setSaveDish={setSaveDish} saveDrinks={saveDrinks} setSaveDrinks={setSaveDrinks} saveDate={saveDate} setSaveDate={setSaveDate} saveAmount={saveAmount} setSaveAmount={setSaveAmount} saveEmail={saveEmail}/>
+                <FindOrder modal={modal} setModal={setModal} setSaveDrinks={setSaveDrinks} setSaveDate={setSaveDate} setSaveAmount={setSaveAmount} setSaveDish={setSaveDish} saveEmail={saveEmail} setSaveEmail={setSaveEmail} />
                 </div>
               </Route>
               <Route path="/dishes" >

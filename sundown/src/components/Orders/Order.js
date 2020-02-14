@@ -8,9 +8,9 @@ import classNames from 'classnames';
 function Order({newOrder, setNewOrder, month, setMonth, day, setDay, year, setYear, amount, setAmount, time, setTime, email, setEmail, saveAmount, setSaveAmount, saveEmail, setSaveEmail, saveDate, setSaveDate, saveDish, saveDrinks}) {
     const currentMonth = (new Date()).getMonth() + 1
     const currentYear = moment().year();
-    const currentDay = moment()._d;
+    const currentDay = moment();
     const currentStamp = moment(currentDay).unix();
-    console.log(currentDay, currentStamp)
+    console.log(currentDay.format('HH'))
     const [dateSelected, setDateSelected] = useState('')
     const [orderButton, setOrderButton] = useState('Order');
     const [errorEmail, setErrorEmail] = useState('');
@@ -18,12 +18,15 @@ function Order({newOrder, setNewOrder, month, setMonth, day, setDay, year, setYe
 
     const monthsInYear = moment.months()
     const daysInMonth = moment(`${year}-${month.value}`).daysInMonth();
+    console.log('BHSBZ WB W', daysInMonth, month, year);
     
     let dayRows = []
     for (let i = 1; i < daysInMonth +1; i++) {
+        console.log('something')
         const date = moment(`${year}-${month.value}-${i}`).weekday()
+        const pastDate = moment(`${year}-${month.value}-${i}`).isBefore(currentDay.format('Y-MM-DD'))
         const dateText = moment.weekdays(date)
-        dayRows.push(<option key={i} value={i} disabled={date === 6 || date === 0 || moment(dateSelected).isBefore(currentDay)}>{i} - {(dateText)}</option>)
+        dayRows.push(<option key={i} value={i} disabled={date === 6 || date === 0 || pastDate }>{i} - {(dateText)}</option>)
     }
 
     let yearRows = []
@@ -62,7 +65,6 @@ function Order({newOrder, setNewOrder, month, setMonth, day, setDay, year, setYe
             setAmount(amount);
             console.log(amount);
         } else {
-            // setErrorAmount('')
             setAmount(amount);
             console.log(amount);
         }
@@ -71,7 +73,6 @@ function Order({newOrder, setNewOrder, month, setMonth, day, setDay, year, setYe
     useEffect(() => {
         const savedData = localStorage.getItem(saveEmail);
         const dataParse = JSON.parse(savedData);
-        // console.log(dataParse, saveEmail);
   
         if (saveEmail) {
             let setLocalData = {
@@ -93,8 +94,6 @@ function Order({newOrder, setNewOrder, month, setMonth, day, setDay, year, setYe
             setYear(setDateValues.newYear);
             setDay(setDateValues.newDay);
             setTime(setDateValues.newTime);
-            // console.log(setLocalData);
-            // console.log(setDateValues);
             setEmail(saveEmail);
             setOrderButton('Update order');
             document.getElementById('emailInput').disabled = 'true';
@@ -138,22 +137,14 @@ function Order({newOrder, setNewOrder, month, setMonth, day, setDay, year, setYe
             setTime(setDefault.timeDef);
             setYear(setDefault.yearDef);
             setDateSelected(setDateDefault);
-            // console.log(setDefault, setDateDefault);
+            setEmail('');
         } 
         
     }, [saveEmail, email])
 
-    // console.log(dateSelected)
-    // console.log(dateSelected.indexOf('Sunday'), dateSelected.indexOf('Saturday'))
-
     useEffect(() => {
         setDateSelected(moment(new Date(year, month.value - 1, day, time)).format('LLLL'))
-        // console.log(dateSelected);
     }, [month, day, time, year])
-
-    if (moment(dateSelected).unix() < currentStamp) {
-        console.log('LESS THAN CURRENT.....')
-    }
 
     const amountOnChange = (event) => {
         setNewOrder(true)
@@ -195,7 +186,7 @@ function Order({newOrder, setNewOrder, month, setMonth, day, setDay, year, setYe
             setErrorEmail('You have to pick drinks & food!')
         }
     }
-    // console.log({year, currentMonth, currentYear});
+    
     return (
         <div id="orderContainer">
             <h2>Order details</h2>
@@ -232,14 +223,15 @@ function Order({newOrder, setNewOrder, month, setMonth, day, setDay, year, setYe
                                 setTime(event.target.value);
                                 setNewOrder(true)
                             }}>
-                                <option value="16">4:00 PM</option>
-                                <option value="17">5:00 PM</option>
-                                <option value="18">6:00 PM</option>
-                                <option value="19">7:00 PM</option>
-                                <option value="20">8:00 PM</option>
-                                <option value="21">9:00 PM</option>
-                                <option value="22">10:00 PM</option>
-                                <option value="23">11:00 PM</option>
+                                {/* <option disabled={ currentDay.format('HH') >= 13 } value="13">1:00 PM</option> */}
+                                <option disabled={ currentDay.format('HH') >= 16 } value="16">4:00 PM</option>
+                                <option disabled={ currentDay.format('HH') >= 17 } value="17">5:00 PM</option>
+                                <option disabled={ currentDay.format('HH') >= 18 } value="18">6:00 PM</option>
+                                <option disabled={ currentDay.format('HH') >= 19 } value="19">7:00 PM</option>
+                                <option disabled={ currentDay.format('HH') >= 20 } value="20">8:00 PM</option>
+                                <option disabled={ currentDay.format('HH') >= 21 } value="21">9:00 PM</option>
+                                <option disabled={ currentDay.format('HH') >= 22 } value="22">10:00 PM</option>
+                                <option disabled={ currentDay.format('HH') >= 23 } value="23">11:00 PM</option>
                             </select>
                             </div>
                             <div>

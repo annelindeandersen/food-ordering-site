@@ -1,17 +1,25 @@
 import React, {useState, useEffect} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import classNames from 'classnames';
 import EmailValidator from 'email-validator';
 
-function FindOrder({saveEmail, setSaveEmail, setSaveDish, setSaveDrinks, setSaveDate, setSaveAmount}) {
+function FindOrder({modal, setModal, saveEmail, setSaveEmail, setSaveDish, setSaveDrinks, setSaveDate, setSaveAmount}) {
     const [message, setMessage] = useState('');
     const [storedData, setStoredData] = useState('');
-    const [modal, setModal] = useState(false);
     const [email, setEmail] = useState('');
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.pathname === '/') {
+            // console.log('xctvygbhunjikml')
+            setSaveEmail('');
+        }
+    }, [location.pathname])
 
     console.log(EmailValidator.validate(saveEmail))
 
     useEffect(() => {
+        setModal(false)
         const getData = localStorage.getItem(saveEmail);
         setStoredData(getData);
         const dataParse = JSON.parse(getData);
@@ -48,7 +56,7 @@ function FindOrder({saveEmail, setSaveEmail, setSaveDish, setSaveDrinks, setSave
 
     return(
         <>
-        <div id="findOrderContainer">
+        <div id="findOrderContainer" className={classNames({"blur": modal === true, "noBlur": modal === false})}>
             <div id="findOrder">
                 <h3>Find your order</h3>
                 <div id="emailContainer">

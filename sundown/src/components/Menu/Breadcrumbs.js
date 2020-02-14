@@ -26,11 +26,15 @@ function Breadcrumbs({ setExit, saveEmail, saveDrinks, saveDish, selectedDrinkId
     }
 
     const drinks = () => {
-        setExit(undefined);
         if (currentLocation.pathname !== '/drinks') {
-            setTimeout(() => {
-                history.push('/drinks')
-            }, 100)
+            if (saveDish.length <= 0) {
+                console.log('something')
+            } else {
+                setExit(undefined);
+                setTimeout(() => {
+                    history.push('/drinks')
+                }, 100)
+            }
         } else {
             history.push('/drinks')
         }

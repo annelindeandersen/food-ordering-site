@@ -173,7 +173,7 @@ button:active, input:active, select:active {
   border-left: 8px solid white;
   border-top: 8px solid transparent;
   border-bottom: 8px solid transparent;
-  left: 40%;
+  left: 38%;
   margin-top: 1.5px;
   position: absolute;
 }
@@ -200,7 +200,7 @@ button:active, input:active, select:active {
   color: white;
   background: linear-gradient(#007DDB, rgb(135, 187, 226));
   position: fixed;
-  top: -75px;
+  top: 0;
   left: 0;
   width: 100vw;
   z-index: 10;
@@ -211,20 +211,35 @@ button:active, input:active, select:active {
 #menuContainer div::after {
   content: '';
   width: 0;
+  margin: 1px 0 0 0;
   height: 2px;
   background: black;
+  transform: scale(1);
   display: block;
-  transition: width 0.3s linear;
+  transition: transform 0.3s, width 0.3s linear;
+}
+
+#menuContainer p {
+  color: white;
+  transform: scale(1);
+  transition: transform 0.3s, color 0.3s;
+}
+
+#menuContainer p:hover {
+  color: black;
+  transform: scale(1.2);
 }
 
 #menuContainer div:hover::after {
+  transform: scale(1.2);
   width: 100%;
+  /* transform: scale(1.2); */
 }
 
-#menuContainer div:hover {
+/* #menuContainer div:hover {
   transform: scale(1.2);
   color: black;
-}
+} */
 
 #menuContainer h2 {
   display: none;
@@ -299,6 +314,14 @@ button:active, input:active, select:active {
   flex-direction: column;
   padding: 25px;
   background: white;
+}
+
+.blur {
+  filter: blur(4px);
+}
+
+.noBlur {
+  filter: blur(0px);
 }
 
 #emailError {
@@ -541,6 +564,12 @@ button:active, input:active, select:active {
 
 .unSelect {
   cursor: pointer;
+  font-weight: bolder;
+  color: white;
+  /* border: solid white 1px; */
+  background: #BA2329;
+  border-radius: 100px;
+  padding: 1px 5.5px 2px;
 }
 
 .selectedDrink div {
@@ -553,6 +582,10 @@ button:active, input:active, select:active {
   flex-direction: column;
   justify-content: space-between;
   width: 30%;
+}
+
+#nextBox .button {
+  width: 100%;
 }
 
 #nextBox p {
@@ -589,6 +622,13 @@ button:active, input:active, select:active {
   }
   .drink h4 {
     font-size: 12px;
+  }
+  #drinksSelected {
+    max-height: none;
+    overflow: visible;
+  }
+  #drinksContainer #nextBox {
+    max-height: none;
   }
 }
 
@@ -821,7 +861,10 @@ select {
     margin: 16px 0vw 30px;
   }
   #breadcrumbContainer {
-    padding: 0 10vw;
+    /* padding: 0 10vw; */
+  }
+  .currentStep::before {
+    left: 30%;
   }
 }
 
@@ -843,7 +886,10 @@ select {
     left: -5vw;
   }
   #breadcrumbContainer {
-    padding: 0 3vw;
+    /* padding: 0 3vw; */
+  }
+  .currentStep::before {
+    left: 20%;
   }
 }
 
@@ -962,15 +1008,11 @@ select {
   width: 100%;
   position: absolute;
   top: calc(50% - 122px);
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-  /* top: -400px; */
 }
 
 .modalContent {
   background: white;
-  padding: 60px 50px;
+  padding: 70px 50px;
   border-radius: 20px;
   box-shadow: 0px 0px 10px rgba(0, 124, 219, 0.199);
   text-align: center;
@@ -979,10 +1021,7 @@ select {
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  /* left: 0;
-  right: 0; */
   width: 60vw;
-  /* margin-left:-135px; */
 }
 
 .modalContent h3 {
@@ -1037,18 +1076,11 @@ select {
   right: 0;
 }
 
-#menuContainer {
-  /* content: ""; */
-  transform: translate(0px, -75px);
+#menuContainer.animate {
   transition: transform 0.4s linear;
+  
 }
 
-#menuContainer.menuRoll {
-  /* content: ""; */
-  transform: translate(0px, 75px);
-}
-
-#menuContainer.menuStay {
-  /* top: 0 !important; */
-  transform: translate(0px, 75px);
+#menuContainer.deactive {
+  transform: translate(0px, -75px);
 }
